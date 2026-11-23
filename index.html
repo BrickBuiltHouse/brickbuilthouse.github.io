@@ -1,0 +1,1949 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Kompletne notatki edukacyjne z Programowania Aplikacji Internetowych: PHP, formularze, MySQL, pliki, sesje, JSON i podstawy JavaScript.">
+<title>Programowanie Aplikacji Internetowych — notatki</title>
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f4f6fa;--paper:#fff;--ink:#202938;--muted:#617084;--line:#e2e8f0;
+  --blue:#2457a7;--blue-soft:#edf4ff;--teal:#087e78;--teal-soft:#e9f7f5;
+  --amber:#9a5a08;--amber-soft:#fff6e7;--red:#a13232;--red-soft:#fff0f0;
+  --code:#111827;--code-ink:#e5edf8;--code-muted:#92a2b8;--purple:#7754b8;
+  --shadow:0 12px 34px rgba(24,39,75,.07);--radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.72 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+.page{width:min(1120px,calc(100% - 36px));margin:42px auto 72px}
+.hero{position:relative;overflow:hidden;padding:54px 58px;border-radius:24px;background:linear-gradient(125deg,#14243d 0%,#1d4779 58%,#176f78 100%);color:#fff;box-shadow:var(--shadow)}
+.hero:after{content:"";position:absolute;width:310px;height:310px;border:1px solid rgba(255,255,255,.16);border-radius:50%;right:-90px;top:-110px;box-shadow:0 0 0 34px rgba(255,255,255,.035),0 0 0 68px rgba(255,255,255,.025)}
+.eyebrow{margin:0 0 12px;color:#b8d7f4;text-transform:uppercase;letter-spacing:.16em;font-size:.76rem;font-weight:800}
+h1{max-width:760px;margin:0;font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.08;letter-spacing:-.04em}
+.hero p{max-width:720px;margin:20px 0 0;color:#e2edf8;font-size:1.08rem}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.hero-meta span{padding:7px 12px;border:1px solid rgba(255,255,255,.24);border-radius:99px;color:#eef6ff;font-size:.85rem;background:rgba(255,255,255,.08)}
+.layout{display:grid;grid-template-columns:260px minmax(0,1fr);gap:26px;align-items:start;margin-top:28px}
+.toc{position:sticky;top:20px;max-height:calc(100vh - 40px);overflow:auto;padding:22px 18px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.toc h2{margin:0 0 12px;font-size:1rem;letter-spacing:.01em}
+.toc ol{margin:0;padding-left:20px;color:var(--muted);font-size:.89rem}
+.toc li{padding:3px 0}
+.toc a{color:#40516a}
+.content{min-width:0}
+.chapter,.intro-card,.final-card{margin:0 0 24px;padding:34px 38px;background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.chapter{scroll-margin-top:20px}
+.chapter-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.chapter-no{display:grid;place-items:center;flex:0 0 48px;height:48px;border-radius:14px;background:var(--blue-soft);color:var(--blue);font-weight:850;font-size:1rem}
+.chapter-head h2{margin:0;font-size:1.7rem;line-height:1.2;letter-spacing:-.025em}
+.chapter-head p{margin:7px 0 0;color:var(--muted);font-size:.92rem}
+h3{margin:30px 0 12px;font-size:1.2rem;line-height:1.35;letter-spacing:-.01em}
+h4{margin:20px 0 8px;font-size:1.02rem}
+p{margin:10px 0}
+ul,ol{padding-left:24px}
+li{margin:5px 0}
+.lead{color:#3e4d61;font-size:1.04rem}
+.meta-line{display:flex;flex-wrap:wrap;gap:9px;margin:0 0 20px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;background:#f0f3f8;color:#526176;font-size:.79rem;font-weight:700}
+.definition{padding:16px 18px;margin:16px 0;border-left:4px solid var(--blue);background:var(--blue-soft);border-radius:0 12px 12px 0}
+.definition strong{display:block;margin-bottom:3px;color:#1f4a88}
+.note,.warning,.remember,.example-note{margin:18px 0;padding:15px 18px;border-radius:12px;border:1px solid transparent}
+.note{background:var(--blue-soft);border-color:#d7e5ff}
+.warning{background:var(--amber-soft);border-color:#f4dfb9}
+.remember{background:var(--teal-soft);border-color:#ccebe5}
+.example-note{background:#f4f1fb;border-color:#e4dcf6}
+.note strong,.warning strong,.remember strong,.example-note strong{display:block;margin-bottom:4px}
+.note strong{color:var(--blue)}.warning strong{color:var(--amber)}.remember strong{color:var(--teal)}.example-note strong{color:var(--purple)}
+.two-col{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.card{padding:17px 18px;border:1px solid var(--line);border-radius:13px;background:#fbfcfe}
+.card h4{margin:0 0 7px}
+.card p:last-child{margin-bottom:0}
+.table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;font-size:.93rem}
+th,td{padding:11px 13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{background:#f3f6fa;color:#33445b;font-weight:800}
+tr:last-child td{border-bottom:0}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace}
+p code,li code,td code{padding:.13em .38em;border-radius:5px;background:#eef2f7;color:#34445a;font-size:.9em;overflow-wrap:anywhere}
+.code-title{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:20px 0 0;padding:9px 14px;border:1px solid #273449;border-bottom:0;border-radius:12px 12px 0 0;background:#1a2638;color:#c8d5e6;font-size:.78rem;font-weight:750;letter-spacing:.04em}
+.code-title span:last-child{color:#8495ad;font-weight:550;letter-spacing:0}
+pre{margin:0 0 18px;padding:19px 21px;overflow-x:auto;border:1px solid #273449;border-radius:0 0 12px 12px;background:var(--code);color:var(--code-ink);font: .88rem/1.65 ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;tab-size:4;white-space:pre}
+pre code{font:inherit;color:inherit}
+.kw{color:#c4a7ff}.str{color:#a7e3b0}.cm{color:#91a1b6;font-style:italic}.fn{color:#8fd5ef}.num{color:#f4c47c}.tag{color:#ffb5a5}.var{color:#f1d28a}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0;padding:15px;border:1px dashed #cbd6e4;border-radius:12px;background:#f8fafc}
+.flow .step{padding:9px 12px;border:1px solid #d7e0eb;border-radius:9px;background:#fff;font-weight:700;color:#3d4d62}
+.flow .arrow{color:#8999ad;font-weight:900}
+.small{color:var(--muted);font-size:.88rem}
+.checklist{list-style:none;padding:0}
+.checklist li{position:relative;padding-left:28px;margin:8px 0}
+.checklist li:before{content:"✓";position:absolute;left:0;top:0;color:var(--teal);font-weight:900}
+hr{height:1px;margin:26px 0;border:0;background:var(--line)}
+.final-card h2{margin-top:0;font-size:1.65rem}
+.glossary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px}
+.glossary div{padding:10px 0;border-bottom:1px solid var(--line)}
+.glossary dt{font-weight:800;color:#334a68}.glossary dd{margin:3px 0 0;color:var(--muted);font-size:.92rem}
+.footer{padding:20px 8px;text-align:center;color:#7b8797;font-size:.83rem}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static;max-height:none}.toc ol{columns:2;column-gap:28px}.chapter,.intro-card,.final-card{padding:28px}}
+@media(max-width:620px){.page{width:min(100% - 20px,1120px);margin:10px auto 35px}.hero{padding:34px 25px;border-radius:18px}.hero p{font-size:1rem}.layout{gap:14px;margin-top:14px}.toc{padding:18px}.toc ol{columns:1}.chapter,.intro-card,.final-card{padding:22px 18px;margin-bottom:14px}.chapter-head h2{font-size:1.4rem}.chapter-no{flex-basis:40px;height:40px}.two-col,.glossary{grid-template-columns:1fr}pre{padding:15px;font-size:.81rem}th,td{padding:9px 10px}}
+@media print{
+  @page{size:A4;margin:16mm 14mm}
+  body{background:#fff;color:#111;font-size:10pt;line-height:1.5}
+  .page{width:100%;margin:0}
+  .hero{padding:24px 28px;border-radius:0;box-shadow:none;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .hero:after{display:none}.layout{display:block;margin-top:14px}.toc{position:static;max-height:none;box-shadow:none;margin-bottom:18px;break-inside:avoid}.toc ol{columns:2}
+  .chapter,.intro-card,.final-card{padding:20px 22px;margin-bottom:14px;border-radius:0;box-shadow:none;break-inside:auto}
+  .chapter-head{break-after:avoid}h2,h3,h4{break-after:avoid}pre,.definition,.note,.warning,.remember,.example-note,.card,.table-wrap{break-inside:avoid}
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:8pt;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  .code-title{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+  a{color:inherit;text-decoration:none}a[href^="#"]:after{content:""}
+  .footer{padding-bottom:0}
+}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="hero">
+  <p class="eyebrow">Notatki edukacyjne · Klasa II technikum</p>
+  <h1>Programowanie Aplikacji Internetowych</h1>
+  <p>Kompendium z bloków 1–16: od przygotowania środowiska XAMPP i podstaw PHP, przez formularze, MySQL, pliki, JSON i sesje, aż po fundamenty JavaScript.</p>
+  <div class="hero-meta"><span>PHP</span><span>HTML i formularze</span><span>MySQL · CRUD</span><span>JavaScript</span><span>Przykłady kodu</span></div>
+</header>
+
+<div class="layout">
+<nav class="toc" aria-label="Spis treści">
+  <h2>Spis treści</h2>
+  <ol>
+    <li><a href="#blok-1">Wprowadzenie, PSO i XAMPP</a></li>
+    <li><a href="#blok-2">PHP: zmienne, stałe i operatory</a></li>
+    <li><a href="#blok-3">Parametry GET</a></li>
+    <li><a href="#blok-4">Warunki i pętle PHP</a></li>
+    <li><a href="#blok-5">Tablice PHP</a></li>
+    <li><a href="#blok-6">Funkcje i pliki PHP</a></li>
+    <li><a href="#blok-7">POST i formularze</a></li>
+    <li><a href="#blok-8">MySQL i CRUD</a></li>
+    <li><a href="#blok-9">Funkcje tekstowe i tablicowe</a></li>
+    <li><a href="#blok-10">Obsługa plików i upload</a></li>
+    <li><a href="#blok-11">JSON i serializacja</a></li>
+    <li><a href="#blok-12">Sesje i ciasteczka</a></li>
+    <li><a href="#blok-13">JavaScript: podstawy</a></li>
+    <li><a href="#blok-14">Warunki i pętle JS</a></li>
+    <li><a href="#blok-15">Funkcje JS</a></li>
+    <li><a href="#blok-16">Obiekty i klasy JS</a></li>
+    <li><a href="#powtorka">Powtórka i słownik</a></li>
+  </ol>
+</nav>
+
+<main class="content">
+<section class="intro-card">
+  <h2>Jak korzystać z notatek?</h2>
+  <p class="lead">Materiał jest ułożony od zagadnień podstawowych do bardziej złożonych. Przykłady kodu są wyłącznie ilustracją składni — zostały umieszczone w statycznych blokach i nie wykonują się na tej stronie.</p>
+  <div class="two-col">
+    <div class="card"><h4>PHP — część serwerowa</h4><p>PHP działa na serwerze. Może przetwarzać formularze, łączyć się z bazą danych, odczytywać pliki i generować odpowiedź HTML lub JSON.</p></div>
+    <div class="card"><h4>JavaScript — część przeglądarkowa</h4><p>JavaScript działa w przeglądarce. Może reagować na działania użytkownika, zmieniać zawartość strony i komunikować się z serwerem.</p></div>
+  </div>
+  <div class="note"><strong>Zakres materiału</strong>Notatki opracowano na podstawie przekazanych bloków 1–16. Materiał zapowiada także m.in. DOM, zdarzenia i AJAX, ale szczegółowe lekcje tych zagadnień nie znalazły się w przekazanym zestawie, dlatego nie są tu rozwijane jako osobne rozdziały.</div>
+</section>
+
+<section class="chapter" id="blok-1">
+  <div class="chapter-head"><div class="chapter-no">01</div><div><h2>Wprowadzenie do przedmiotu, PSO i środowisko pracy</h2><p>1 godzina · Organizacja nauki i przygotowanie komputera do tworzenia aplikacji</p></div></div>
+  <h3>1. Czym zajmuje się Programowanie Aplikacji Internetowych?</h3>
+  <p>Przedmiot dotyczy tworzenia aplikacji działających w sieci. W pierwszej części kursu poznajemy PHP, czyli język wykonywany po stronie serwera. Następnie przechodzimy do JavaScript, który działa w przeglądarce użytkownika.</p>
+  <div class="flow"><span class="step">Przeglądarka</span><span class="arrow">→ żądanie HTTP →</span><span class="step">Serwer (PHP)</span><span class="arrow">→ odpowiedź HTML/JSON →</span><span class="step">Przeglądarka</span></div>
+  <p>Przykładowo: użytkownik otwiera stronę z listą uczniów. Serwer może pobrać rekordy z MySQL przy użyciu PHP, wygenerować HTML i odesłać go do przeglądarki. JavaScript może następnie obsługiwać zdarzenia i aktualizować elementy strony.</p>
+  <h3>2. Przedmiotowy System Oceniania (PSO)</h3>
+  <p>PSO określa, jakie umiejętności i aktywności podlegają ocenie, jakie są kryteria oraz jak można poprawiać wyniki. Poniższy układ pochodzi z materiału lekcyjnego i jest przykładowy — wiążące są zasady zatwierdzone w danej szkole.</p>
+  <div class="table-wrap"><table><thead><tr><th>Obszar oceniania</th><th>Waga</th><th>Co jest oceniane?</th></tr></thead><tbody>
+    <tr><td>Zadania praktyczne na lekcji</td><td>3</td><td>Kod źródłowy i działająca aplikacja.</td></tr>
+    <tr><td>Kartkówki i sprawdziany teoretyczne</td><td>2</td><td>Znajomość pojęć, składni i mechanizmów.</td></tr>
+    <tr><td>Projekty (np. blok „Projekt JS”)</td><td>4</td><td>Samodzielne wykonanie większego zadania.</td></tr>
+    <tr><td>Aktywność na lekcji</td><td>1</td><td>Udział w ćwiczeniach i dyskusji.</td></tr>
+    <tr><td>Praca domowa</td><td>1</td><td>Terminowość i poprawność wykonania.</td></tr>
+  </tbody></table></div>
+  <p>Przykładowa skala procentowa:</p>
+  <div class="table-wrap"><table><thead><tr><th>Procent uzyskanych punktów</th><th>Ocena</th></tr></thead><tbody>
+    <tr><td>0–39%</td><td>Niedostateczny</td></tr><tr><td>40–54%</td><td>Dopuszczający</td></tr><tr><td>55–69%</td><td>Dostateczny</td></tr><tr><td>70–84%</td><td>Dobry</td></tr><tr><td>85–94%</td><td>Bardzo dobry</td></tr><tr><td>95–100%</td><td>Celujący</td></tr>
+  </tbody></table></div>
+  <h4>Przykładowe zasady organizacyjne</h4>
+  <ul>
+    <li>Zadanie praktyczne oddaje się jako działający plik, np. <code>.php</code>, <code>.html</code> lub <code>.js</code>, wraz z krótkim opisem działania.</li>
+    <li>Praca powinna być samodzielna. Kopiowanie rozwiązania bez zrozumienia nie potwierdza opanowania umiejętności; w przykładzie PSO przewidziano ocenę niedostateczną i poprawę ustną.</li>
+    <li>Nieobecność na sprawdzianie oznacza konieczność zaliczenia go w terminie określonym przez nauczyciela — w przykładzie: do dwóch tygodni.</li>
+    <li>Ocena semestralna i roczna jest ustalana zgodnie z wewnątrzszkolnymi zasadami oceniania (WZO).</li>
+  </ul>
+  <div class="warning"><strong>Ważne — PSO jest przykładem</strong>Wagi, progi procentowe, terminy popraw i konsekwencje niesamodzielnej pracy trzeba zawsze sprawdzić w dokumentach obowiązujących w konkretnej szkole. Nie należy traktować przykładowej tabeli jako uniwersalnego przepisu.</div>
+  <h3>3. Plan materiału w roku szkolnym</h3>
+  <ol>
+    <li><strong>PHP:</strong> podstawy, parametry GET i POST, tablice, funkcje, bazy danych, pliki i sesje.</li>
+    <li><strong>JavaScript:</strong> podstawy języka, DOM, zdarzenia, formularze i efekty.</li>
+    <li><strong>Projekt zaliczeniowy:</strong> połączenie poznanych umiejętności w aplikacji.</li>
+    <li><strong>Powtórzenie i przygotowanie do egzaminu zawodowego:</strong> EE.09/INF.03 — zgodnie z zakresem realizowanym w danym cyklu kształcenia.</li>
+  </ol>
+  <h3>4. XAMPP — lokalne środowisko serwerowe</h3>
+  <div class="definition"><strong>Serwer lokalny</strong>To środowisko uruchomione na własnym komputerze, które pozwala testować aplikację webową bez publikowania jej w Internecie. Adres <code>localhost</code> wskazuje na komputer, z którego korzystamy.</div>
+  <p>XAMPP to pakiet zawierający m.in. serwer Apache, interpreter PHP i serwer bazodanowy MySQL/MariaDB. Dzięki niemu można lokalnie testować skrypty PHP oraz aplikacje korzystające z bazy danych.</p>
+  <h4>Instalacja i pierwszy test</h4>
+  <ol>
+    <li>Pobierz instalator XAMPP z oficjalnej strony <a href="https://www.apachefriends.org/" target="_blank" rel="noopener">apachefriends.org</a>.</li>
+    <li>Zainstaluj pakiet i uruchom XAMPP Control Panel.</li>
+    <li>Uruchom moduły <strong>Apache</strong> i — gdy potrzebujesz bazy danych — <strong>MySQL</strong>.</li>
+    <li>Umieszczaj pliki projektu w katalogu dokumentów serwera: <code>C:\xampp\htdocs\</code> w typowej instalacji Windows albo <code>/opt/lampp/htdocs/</code> w typowej instalacji Linux.</li>
+    <li>Utwórz katalog <code>test</code>, a w nim plik <code>index.php</code>.</li>
+    <li>Otwórz w przeglądarce adres <code>http://localhost/test/</code>.</li>
+  </ol>
+  <div class="code-title"><span>index.php</span><span>PHP · pierwszy test</span></div>
+  <pre><code>&lt;?php
+echo "Działa!";
+?&gt;</code></pre>
+  <p>Jeśli wszystko jest poprawnie skonfigurowane, przeglądarka wyświetli tekst „Działa!”. Nie otwieramy takiego pliku dwukrotnym kliknięciem z dysku — musi zostać obsłużony przez serwer PHP.</p>
+  <p>Panel <strong>phpMyAdmin</strong> jest zwykle dostępny pod adresem <code>http://localhost/phpmyadmin/</code>. Służy do zarządzania bazami danych i będzie wykorzystywany w dalszej części kursu.</p>
+  <div class="remember"><strong>Zapamiętaj</strong><code>htdocs</code> to katalog projektów, Apache obsługuje żądania HTTP, PHP wykonuje kod serwerowy, a phpMyAdmin ułatwia zarządzanie bazą danych.</div>
+  <h3>5. PHP a JavaScript — najważniejsza różnica</h3>
+  <div class="table-wrap"><table><thead><tr><th>Cecha</th><th>PHP</th><th>JavaScript</th></tr></thead><tbody>
+    <tr><td>Miejsce wykonania</td><td>Serwer</td><td>Przeglądarka użytkownika (typowo)</td></tr>
+    <tr><td>Kiedy działa?</td><td>Przed wysłaniem odpowiedzi do przeglądarki</td><td>Po otrzymaniu i przetworzeniu strony</td></tr>
+    <tr><td>Typowe możliwości</td><td>Obsługa bazy danych, plików, sesji, generowanie HTML</td><td>Obsługa DOM, zdarzeń i interakcji użytkownika</td></tr>
+    <tr><td>Widoczność kodu</td><td>Kod źródłowy PHP pozostaje na serwerze</td><td>Kod dostarczony do przeglądarki można obejrzeć</td></tr>
+  </tbody></table></div>
+  <div class="note"><strong>Praca domowa</strong>Zainstaluj XAMPP na komputerze domowym, uruchom Apache, utwórz plik testowy <code>index.php</code> i wykonaj zrzut ekranu działającej strony.</div>
+</section>
+
+<section class="chapter" id="blok-2">
+  <div class="chapter-head"><div class="chapter-no">02</div><div><h2>Podstawy PHP — zmienne, stałe, typy danych i operatory</h2><p>2 godziny · Składnia języka i podstawowe operacje na danych</p></div></div>
+  <h3>1. Struktura skryptu PHP</h3>
+  <p>PHP zapisujemy zwykle w plikach z rozszerzeniem <code>.php</code>. Kod przeznaczony do wykonania przez interpreter umieszczamy między znacznikami <code>&lt;?php</code> i <code>?&gt;</code>. Plik powinien znajdować się w katalogu obsługiwanym przez serwer, np. <code>htdocs</code>.</p>
+  <div class="code-title"><span>pierwszy.php</span><span>PHP · podstawowa struktura</span></div>
+  <pre><code>&lt;?php
+echo "Witaj świecie!";
+?&gt;</code></pre>
+  <p>PHP może być mieszany z HTML. Fragment poza znacznikami PHP jest przekazywany jako zwykła treść dokumentu.</p>
+  <div class="code-title"><span>strona.php</span><span>PHP + HTML</span></div>
+  <pre><code>&lt;!doctype html&gt;
+&lt;html lang="pl"&gt;
+&lt;body&gt;
+    &lt;h1&gt;Witaj na stronie&lt;/h1&gt;
+    &lt;?php
+        $imie = "Anna";
+        echo "&lt;p&gt;Miło Cię poznać, $imie!&lt;/p&gt;";
+    ?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  <h3>2. Zmienne</h3>
+  <div class="definition"><strong>Zmienna</strong>Nazwana komórka danych, której wartość może być odczytywana i — w razie potrzeby — zmieniana w trakcie działania programu.</div>
+  <p>W PHP nazwa zmiennej rozpoczyna się od znaku <code>$</code>. Język jest dynamicznie typowany: typ wartości jest rozpoznawany w czasie działania i nie trzeba go zwykle deklarować przy tworzeniu zmiennej.</p>
+  <div class="code-title"><span>zmienne.php</span><span>PHP · przykładowe wartości</span></div>
+  <pre><code>&lt;?php
+$imie = "Anna";       // string — tekst
+$wiek = 17;           // integer — liczba całkowita
+$srednia = 4.5;       // float — liczba zmiennoprzecinkowa
+$uczen = true;        // boolean — prawda/fałsz
+
+$wiek = 18;           // zmiana wartości zmiennej
+?&gt;</code></pre>
+  <p>Poprawna nazwa zmiennej zaczyna się od litery lub podkreślenia, a później może zawierać litery, cyfry i podkreślenia. Wielkość liter ma znaczenie: <code>$imie</code> i <code>$Imie</code> to różne zmienne.</p>
+  <h3>3. Stałe</h3>
+  <div class="definition"><strong>Stała</strong>Nazwa przypisana do wartości, której nie zmieniamy w trakcie działania programu. W przeciwieństwie do zmiennej jej nazwy nie poprzedzamy znakiem <code>$</code>.</div>
+  <div class="code-title"><span>stale.php</span><span>PHP · define() i const</span></div>
+  <pre><code>&lt;?php
+define("SZKOLA", "Technikum nr 1");
+const WERSJA = "1.0";
+
+echo SZKOLA;
+echo WERSJA;
+?&gt;</code></pre>
+  <p><code>define()</code> tworzy stałą w czasie wykonywania programu. <code>const</code> deklaruje stałą w składni języka. W prostych przykładach obie formy służą do przechowywania wartości, które mają pozostać niezmienne.</p>
+  <h3>4. Typy danych i rzutowanie</h3>
+  <div class="table-wrap"><table><thead><tr><th>Typ</th><th>Znaczenie</th><th>Przykład</th></tr></thead><tbody>
+    <tr><td><code>integer</code> / <code>int</code></td><td>Liczba całkowita</td><td><code>17</code></td></tr>
+    <tr><td><code>float</code> / <code>double</code></td><td>Liczba zmiennoprzecinkowa</td><td><code>4.5</code></td></tr>
+    <tr><td><code>string</code></td><td>Ciąg znaków</td><td><code>"Anna"</code></td></tr>
+    <tr><td><code>boolean</code> / <code>bool</code></td><td>Wartość logiczna</td><td><code>true</code>, <code>false</code></td></tr>
+    <tr><td><code>array</code></td><td>Tablica wartości</td><td><code>[1, 2, 3]</code></td></tr>
+    <tr><td><code>NULL</code></td><td>Brak wartości</td><td><code>null</code></td></tr>
+  </tbody></table></div>
+  <p><strong>Rzutowanie</strong> polega na jawnej konwersji wartości na inny typ. Może być potrzebne np. wtedy, gdy liczba została pobrana z formularza jako tekst.</p>
+  <div class="code-title"><span>rzutowanie.php</span><span>PHP · string na int</span></div>
+  <pre><code>&lt;?php
+$a = "10";         // string
+$b = (int)$a + 5;  // konwersja na int, następnie dodawanie
+
+var_dump($a, $b);
+// string(2) "10"
+// int(15)
+?&gt;</code></pre>
+  <h3>5. Operatory PHP</h3>
+  <div class="table-wrap"><table><thead><tr><th>Rodzaj</th><th>Operatory</th><th>Znaczenie</th></tr></thead><tbody>
+    <tr><td>Arytmetyczne</td><td><code>+ - * / % **</code></td><td>Dodawanie, odejmowanie, mnożenie, dzielenie, reszta z dzielenia, potęgowanie.</td></tr>
+    <tr><td>Przypisania</td><td><code>= += -= *= /=</code></td><td>Przypisanie wartości i skrócone przypisanie po wykonaniu działania.</td></tr>
+    <tr><td>Porównania</td><td><code>== === != !== &lt; &gt; &lt;= &gt;=</code></td><td>Porównywanie wartości; operatory potrójne sprawdzają również typ.</td></tr>
+    <tr><td>Logiczne</td><td><code>&amp;&amp; || !</code></td><td>Koniunkcja (i), alternatywa (lub), negacja (nie).</td></tr>
+    <tr><td>Konkatenacja</td><td><code>.</code>, <code>.=</code></td><td>Łączenie tekstów.</td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>operatory.php</span><span>PHP · przykłady</span></div>
+  <pre><code>&lt;?php
+$a = 10;
+$b = 3;
+
+echo $a + $b;            // 13
+echo $a % $b;            // 1 — reszta z dzielenia
+echo $a ** $b;           // 1000 — 10 do potęgi 3
+echo $a . " i " . $b;    // 10 i 3 — łączenie tekstów
+
+var_dump(5 == "5");     // bool(true) — porównanie luźne
+var_dump(5 === "5");    // bool(false) — różne typy
+?&gt;</code></pre>
+  <div class="two-col">
+    <div class="card"><h4><code>==</code> — porównanie luźne</h4><p>Sprawdza równość po ewentualnej konwersji typów. Może dać wynik zaskakujący, jeśli porównujemy różne typy.</p></div>
+    <div class="card"><h4><code>===</code> — porównanie ścisłe</h4><p>Wymaga zgodności wartości i typu. W praktyce jest zwykle bezpieczniejszym wyborem.</p></div>
+  </div>
+  <h3>6. Podgląd wartości i debugowanie</h3>
+  <ul>
+    <li><code>echo</code> — wypisuje tekst lub wartość do odpowiedzi HTML.</li>
+    <li><code>print_r()</code> — czytelnie pokazuje tablice i obiekty.</li>
+    <li><code>var_dump()</code> — pokazuje wartość oraz typ i szczegóły danych.</li>
+  </ul>
+  <div class="code-title"><span>debugowanie.php</span><span>PHP · narzędzia diagnostyczne</span></div>
+  <pre><code>&lt;?php
+$dane = ["imie" =&gt; "Anna", "wiek" =&gt; 17];
+
+echo "Użytkownik: " . $dane["imie"];
+print_r($dane);
+var_dump($dane);
+?&gt;</code></pre>
+  <div class="remember"><strong>Do zapamiętania</strong>Zmienne PHP zaczynają się od <code>$</code>, stałe nie. Kropka <code>.</code> łączy teksty. <code>===</code> porównuje zarówno wartość, jak i typ. <code>var_dump()</code> pomaga sprawdzić, co program faktycznie przechowuje.</div>
+</section>
+
+<section class="chapter" id="blok-3">
+  <div class="chapter-head"><div class="chapter-no">03</div><div><h2>Obsługa parametrów GET</h2><p>3 godziny · Dane przekazywane w adresie URL</p></div></div>
+  <h3>1. Query string — parametry w adresie URL</h3>
+  <div class="definition"><strong>Query string</strong>Część adresu URL rozpoczynająca się od znaku <code>?</code>. Zawiera pary klucz–wartość. Kolejne parametry oddzielamy znakiem <code>&amp;</code>.</div>
+  <div class="code-title"><span>Przykładowy adres</span><span>GET · query string</span></div>
+  <pre><code>http://localhost/PAI_kurs/blok03_get/przyklad.php?imie=Anna&amp;wiek=17</code></pre>
+  <p>W przykładzie przekazano dwa parametry: <code>imie</code> o wartości <code>Anna</code> i <code>wiek</code> o wartości <code>17</code>.</p>
+  <h3>2. Superglobalna tablica <code>$_GET</code></h3>
+  <p>PHP udostępnia parametry GET w tablicy superglobalnej <code>$_GET</code>. Jest ona dostępna w różnych zakresach skryptu bez przekazywania jej jako argumentu funkcji.</p>
+  <div class="code-title"><span>odczyt_get.php</span><span>PHP · prosty odczyt</span></div>
+  <pre><code>&lt;?php
+$imie = $_GET['imie']; // np. "Anna"
+$wiek = $_GET['wiek']; // np. "17"
+echo "Cześć, $imie!";
+?&gt;</code></pre>
+  <div class="warning"><strong>Brak parametru</strong>Bezpośredni odczyt <code>$_GET['imie']</code> może wywołać ostrzeżenie, jeśli użytkownik otworzy stronę bez parametru <code>imie</code>. Dane wejściowe należy sprawdzać przed użyciem. Typowe proste wartości parametrów GET są odczytywane jako tekst; kształt nazwy z nawiasami kwadratowymi może utworzyć tablicę.</div>
+  <h3>3. Bezpieczne sprawdzanie, czy parametr istnieje</h3>
+  <p>Do najczęściej stosowanych rozwiązań należą <code>isset()</code>, <code>empty()</code> i operator null coalescing <code>??</code>.</p>
+  <div class="code-title"><span>sprawdzanie_get.php</span><span>PHP · isset() i ??</span></div>
+  <pre><code>&lt;?php
+// Wariant 1 — warunek
+if (isset($_GET['imie'])) {
+    $imie = $_GET['imie'];
+} else {
+    $imie = "Gość";
+}
+
+// Wariant 2 — krótszy zapis
+$imie = $_GET['imie'] ?? "Gość";
+?&gt;</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Mechanizm</th><th>Co sprawdza?</th><th>Ważna uwaga</th></tr></thead><tbody>
+    <tr><td><code>isset($x)</code></td><td>Czy zmienna/element istnieje i nie ma wartości <code>null</code>.</td><td>Wartość <code>""</code> i <code>0</code> nadal może być ustawiona.</td></tr>
+    <tr><td><code>empty($x)</code></td><td>Czy wartość jest „pusta” według reguł PHP.</td><td>Za pustą uznaje m.in. <code>"0"</code>, <code>0</code>, <code>false</code>, pusty tekst, pustą tablicę i brak zmiennej.</td></tr>
+    <tr><td><code>$x ?? $domyslna</code></td><td>Zwraca wartość z lewej strony, jeśli istnieje i nie jest <code>null</code>; w przeciwnym razie wartość domyślną.</td><td>Wygodny sposób na obsługę braku parametru.</td></tr>
+  </tbody></table></div>
+  <h3>4. Formularz wysyłający dane metodą GET</h3>
+  <div class="code-title"><span>formularz_get.html</span><span>HTML · metoda GET</span></div>
+  <pre><code>&lt;form method="get" action="przyklad.php"&gt;
+    &lt;label&gt;
+        Imię:
+        &lt;input type="text" name="imie"&gt;
+    &lt;/label&gt;
+    &lt;input type="submit" value="Wyślij"&gt;
+&lt;/form&gt;</code></pre>
+  <p>Po wysłaniu formularza przeglądarka umieści dane w adresie URL, np. <code>przyklad.php?imie=Anna</code>. Atrybut <code>name</code> określa nazwę parametru widoczną w <code>$_GET</code>.</p>
+  <h3>5. Wyświetlanie danych użytkownika i XSS</h3>
+  <div class="definition"><strong>XSS (Cross-Site Scripting)</strong>Rodzaj ataku polegający na doprowadzeniu do wykonania niepożądanego kodu po stronie przeglądarki, np. przez wstawienie złośliwego znacznika lub skryptu do treści wyświetlanej na stronie.</div>
+  <p>Dane pochodzące od użytkownika należy odpowiednio kodować przy umieszczaniu ich w HTML. W PHP służy do tego m.in. <code>htmlspecialchars()</code>.</p>
+  <div class="code-title"><span>bezpieczne_wyswietlanie.php</span><span>PHP · kodowanie tekstu HTML</span></div>
+  <pre><code>&lt;?php
+$imie = $_GET['imie'] ?? '';
+echo "Witaj, " . htmlspecialchars($imie, ENT_QUOTES, 'UTF-8');
+?&gt;</code></pre>
+  <div class="warning"><strong>Walidacja to nie to samo co kodowanie</strong>Walidacja sprawdza, czy dane spełniają wymagania (np. czy wiek jest liczbą). <code>htmlspecialchars()</code> zabezpiecza sposób umieszczenia tekstu w HTML. Jedno nie zastępuje drugiego.</div>
+  <h3>6. Typowe zastosowania GET</h3>
+  <ul>
+    <li>Przechodzenie do konkretnej strony listy: <code>lista.php?strona=2</code>.</li>
+    <li>Filtrowanie produktów: <code>sklep.php?kategoria=buty&amp;sort=cena</code>.</li>
+    <li>Wskazywanie rekordu: <code>produkt.php?id=15</code>.</li>
+    <li>Wyszukiwanie: <code>wyniki.php?fraza=php</code>.</li>
+  </ul>
+  <div class="remember"><strong>Zapamiętaj</strong>GET służy typowo do odczytu i filtrowania danych. Parametry są widoczne w URL, mogą zostać skopiowane i zapisane w zakładce. Nigdy nie umieszczaj w adresie poufnych informacji, np. haseł.</div>
+</section>
+
+<section class="chapter" id="blok-4">
+  <div class="chapter-head"><div class="chapter-no">04</div><div><h2>Instrukcje warunkowe i pętle w PHP</h2><p>3 godziny · Sterowanie przebiegiem programu</p></div></div>
+  <h3>1. Instrukcja <code>if / elseif / else</code></h3>
+  <p>Instrukcja warunkowa pozwala wykonać różne fragmenty kodu zależnie od tego, czy warunek jest prawdziwy.</p>
+  <div class="code-title"><span>warunki.php</span><span>PHP · dobór oceny</span></div>
+  <pre><code>&lt;?php
+$ocena = 4;
+
+if ($ocena &gt;= 5) {
+    echo "Bardzo dobry";
+} elseif ($ocena &gt;= 4) {
+    echo "Dobry";
+} elseif ($ocena &gt;= 3) {
+    echo "Dostateczny";
+} else {
+    echo "Niedostateczny";
+}
+?&gt;</code></pre>
+  <p>Warunki są sprawdzane od góry. Wykonany zostaje pierwszy blok, którego warunek jest prawdziwy. Jeżeli żaden nie pasuje, wykonywany jest blok <code>else</code>, jeśli został podany.</p>
+  <h3>2. Instrukcja <code>switch</code></h3>
+  <p><code>switch</code> jest wygodny, gdy jedna zmienna może przyjmować kilka konkretnych wartości.</p>
+  <div class="code-title"><span>switch.php</span><span>PHP · wybór dnia</span></div>
+  <pre><code>&lt;?php
+$dzien = 3;
+
+switch ($dzien) {
+    case 1:
+        echo "Poniedziałek";
+        break;
+    case 2:
+        echo "Wtorek";
+        break;
+    case 3:
+        echo "Środa";
+        break;
+    default:
+        echo "Nieznany dzień";
+}
+?&gt;</code></pre>
+  <p><code>break</code> kończy wykonywanie danej gałęzi. Bez niego program może przejść do kolejnego <code>case</code> (zjawisko fall-through).</p>
+  <h3>3. Pętla <code>for</code></h3>
+  <p>Pętla <code>for</code> jest wygodna, gdy znamy liczbę iteracji lub chcemy kontrolować licznik.</p>
+  <div class="code-title"><span>for.php</span><span>PHP · pięć iteracji</span></div>
+  <pre><code>&lt;?php
+for ($i = 1; $i &lt;= 5; $i++) {
+    echo "Iteracja $i&lt;br&gt;";
+}
+?&gt;</code></pre>
+  <p>Trzy części nagłówka pętli oznaczają: inicjalizację licznika (<code>$i = 1</code>), warunek kontynuacji (<code>$i &lt;= 5</code>) i zmianę licznika po każdej iteracji (<code>$i++</code>).</p>
+  <h3>4. Pętle <code>while</code> i <code>do...while</code></h3>
+  <p><code>while</code> sprawdza warunek przed wykonaniem treści. <code>do...while</code> najpierw wykonuje treść, a dopiero później sprawdza warunek — dlatego wykona się przynajmniej raz.</p>
+  <div class="code-title"><span>while.php</span><span>PHP · warunek przed wykonaniem</span></div>
+  <pre><code>&lt;?php
+$i = 1;
+while ($i &lt;= 5) {
+    echo $i . " ";
+    $i++;
+}
+?&gt;</code></pre>
+  <div class="code-title"><span>do_while.php</span><span>PHP · wykonanie przed sprawdzeniem</span></div>
+  <pre><code>&lt;?php
+$i = 1;
+do {
+    echo $i . " ";
+    $i++;
+} while ($i &lt;= 5);
+?&gt;</code></pre>
+  <div class="note"><strong>Pułapka pętli</strong>W pętli <code>while</code> pamiętaj o zmianie wartości wpływającej na warunek. Jeśli warunek nigdy nie stanie się fałszywy, powstanie pętla nieskończona.</div>
+  <h3>5. Pętla <code>foreach</code> — przechodzenie po tablicy</h3>
+  <p><code>foreach</code> przechodzi po kolejnych elementach tablicy bez ręcznego zarządzania indeksem.</p>
+  <div class="code-title"><span>foreach.php</span><span>PHP · wartości tablicy</span></div>
+  <pre><code>&lt;?php
+$owoce = ["jabłko", "gruszka", "banan"];
+
+foreach ($owoce as $owoc) {
+    echo $owoc . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+  <p>W tablicy asocjacyjnej można pobierać jednocześnie klucz i wartość:</p>
+  <div class="code-title"><span>foreach_klucz_wartosc.php</span><span>PHP · klucz i wartość</span></div>
+  <pre><code>&lt;?php
+$uczen = ["imie" =&gt; "Anna", "klasa" =&gt; "3TI"];
+
+foreach ($uczen as $klucz =&gt; $wartosc) {
+    echo "$klucz: $wartosc&lt;br&gt;";
+}
+?&gt;</code></pre>
+  <h3>6. <code>break</code> i <code>continue</code></h3>
+  <ul>
+    <li><code>break</code> natychmiast kończy bieżącą pętlę lub instrukcję <code>switch</code>.</li>
+    <li><code>continue</code> pomija pozostałą część bieżącej iteracji i przechodzi do następnej.</li>
+  </ul>
+  <div class="code-title"><span>break_continue.php</span><span>PHP · przerywanie i pomijanie iteracji</span></div>
+  <pre><code>&lt;?php
+for ($i = 1; $i &lt;= 10; $i++) {
+    if ($i == 5) {
+        break;       // pętla kończy się przy i = 5
+    }
+    if ($i % 2 == 0) {
+        continue;    // pomiń liczby parzyste
+    }
+    echo $i . " ";
+}
+// Wynik: 1 3
+?&gt;</code></pre>
+  <div class="remember"><strong>Do zapamiętania</strong><code>for</code> — licznik i znana liczba powtórzeń; <code>while</code> — warunek przed iteracją; <code>do...while</code> — treść co najmniej raz; <code>foreach</code> — elementy tablicy; <code>break</code> — zakończ; <code>continue</code> — pomiń tę iterację.</div>
+</section>
+
+<section class="chapter" id="blok-5">
+  <div class="chapter-head"><div class="chapter-no">05</div><div><h2>Tablice indeksowane, asocjacyjne i wielowymiarowe</h2><p>3 godziny · Przechowywanie i przetwarzanie wielu wartości</p></div></div>
+  <h3>1. Czym jest tablica?</h3>
+  <div class="definition"><strong>Tablica (<code>array</code>)</strong>Struktura danych, która przechowuje wiele wartości pod wspólną nazwą. Do elementów odwołujemy się za pomocą indeksów lub kluczy.</div>
+  <h3>2. Tablica indeksowana i asocjacyjna</h3>
+  <p>W tablicy indeksowanej elementy są zwykle numerowane od zera. Tablica asocjacyjna korzysta z kluczy, np. tekstowych nazw pól.</p>
+  <div class="code-title"><span>typy_tablic.php</span><span>PHP · dwa rodzaje tablic</span></div>
+  <pre><code>&lt;?php
+$owoce = ["jabłko", "gruszka", "banan"];
+$uczen = [
+    "imie" =&gt; "Anna",
+    "wiek" =&gt; 17
+];
+
+echo $owoce[0];       // jabłko
+echo $uczen["imie"];  // Anna
+?&gt;</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Rodzaj</th><th>Przykładowy zapis</th><th>Odczyt</th></tr></thead><tbody>
+    <tr><td>Indeksowana</td><td><code>["Ala", "Ola"]</code></td><td><code>$imiona[0]</code></td></tr>
+    <tr><td>Asocjacyjna</td><td><code>["imie" =&gt; "Ala"]</code></td><td><code>$osoba["imie"]</code></td></tr>
+  </tbody></table></div>
+  <h3>3. Dodawanie, modyfikowanie i usuwanie</h3>
+  <div class="code-title"><span>modyfikacja_tablicy.php</span><span>PHP · operacje na elementach</span></div>
+  <pre><code>&lt;?php
+$uczen = ["imie" =&gt; "Anna", "wiek" =&gt; 17];
+
+$uczen["klasa"] = "3TI";  // dodanie elementu
+$uczen["wiek"] = 18;       // zmiana istniejącego elementu
+unset($uczen["imie"]);     // usunięcie elementu
+
+print_r($uczen);
+?&gt;</code></pre>
+  <p>W tablicach indeksowanych nowy element można dopisać również za pomocą pustych nawiasów kwadratowych: <code>$owoce[] = "śliwka";</code>.</p>
+  <h3>4. Tablice wielowymiarowe</h3>
+  <p>Tablica wielowymiarowa to tablica, której elementami są kolejne tablice. Można w ten sposób przechowywać np. listę uczniów, z których każdy ma kilka właściwości.</p>
+  <div class="code-title"><span>uczniowie.php</span><span>PHP · tablica rekordów</span></div>
+  <pre><code>&lt;?php
+$uczniowie = [
+    ["imie" =&gt; "Anna", "ocena" =&gt; 5],
+    ["imie" =&gt; "Piotr", "ocena" =&gt; 3],
+];
+
+foreach ($uczniowie as $u) {
+    echo $u["imie"] . " - " . $u["ocena"] . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+  <p>Dostęp do oceny pierwszego ucznia wygląda tak: <code>$uczniowie[0]["ocena"]</code>.</p>
+  <h3>5. Najczęściej używane funkcje tablicowe</h3>
+  <div class="table-wrap"><table><thead><tr><th>Funkcja</th><th>Zastosowanie</th></tr></thead><tbody>
+    <tr><td><code>count($tablica)</code></td><td>Liczba elementów tablicy.</td></tr>
+    <tr><td><code>array_sum($tablica)</code></td><td>Suma wartości liczbowych.</td></tr>
+    <tr><td><code>max($tablica)</code> / <code>min($tablica)</code></td><td>Największa / najmniejsza wartość.</td></tr>
+    <tr><td><code>sort($tablica)</code> / <code>rsort($tablica)</code></td><td>Sortowanie rosnące / malejące; indeksy numeryczne są nadawane ponownie.</td></tr>
+    <tr><td><code>array_map()</code></td><td>Przekształcenie każdego elementu według funkcji.</td></tr>
+    <tr><td><code>array_filter()</code></td><td>Wybór elementów spełniających warunek.</td></tr>
+    <tr><td><code>array_keys()</code> / <code>array_values()</code></td><td>Pobranie kluczy / wartości.</td></tr>
+    <tr><td><code>in_array($szukana, $tablica)</code></td><td>Sprawdzenie, czy wartość występuje w tablicy.</td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>funkcje_tablicowe.php</span><span>PHP · map, filter, sumowanie</span></div>
+  <pre><code>&lt;?php
+$liczby = [5, 3, 8, 1, 9];
+
+sort($liczby);                   // [1, 3, 5, 8, 9]
+$count = count($liczby);         // 5
+$suma = array_sum($liczby);      // 26
+$najwieksza = max($liczby);      // 9
+$najmniejsza = min($liczby);     // 1
+
+$podwojone = array_map(
+    fn($x) =&gt; $x * 2,
+    $liczby
+);
+$parzyste = array_filter(
+    $liczby,
+    fn($x) =&gt; $x % 2 == 0
+);
+
+$klucze = array_keys(["a" =&gt; 1, "b" =&gt; 2]);
+$wartosci = array_values(["a" =&gt; 1, "b" =&gt; 2]);
+$istnieje = in_array(8, $liczby, true);
+?&gt;</code></pre>
+  <div class="note"><strong>Uwaga o array_filter()</strong>Funkcja zwykle zachowuje oryginalne klucze wybranych elementów. Jeśli potrzebujesz ponownie ponumerowanej tablicy, możesz użyć <code>array_values()</code>.</div>
+  <h3>6. Sortowanie tablic asocjacyjnych</h3>
+  <p>W tablicy asocjacyjnej ważne jest, czy sortujemy według wartości, czy według kluczy.</p>
+  <div class="code-title"><span>sortowanie_asocjacyjne.php</span><span>PHP · asort i ksort</span></div>
+  <pre><code>&lt;?php
+$oceny = [
+    "Anna" =&gt; 5,
+    "Piotr" =&gt; 3,
+    "Kasia" =&gt; 4
+];
+
+asort($oceny); // sortuje według wartości, zachowuje klucze
+ksort($oceny); // sortuje według kluczy
+?&gt;</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Funkcja</th><th>Po czym sortuje?</th><th>Czy zachowuje powiązania klucz–wartość?</th></tr></thead><tbody>
+    <tr><td><code>sort()</code></td><td>Według wartości</td><td>Nie — nadaje nowe indeksy numeryczne.</td></tr>
+    <tr><td><code>rsort()</code></td><td>Według wartości malejąco</td><td>Nie — nadaje nowe indeksy numeryczne.</td></tr>
+    <tr><td><code>asort()</code></td><td>Według wartości</td><td>Tak.</td></tr>
+    <tr><td><code>ksort()</code></td><td>Według kluczy</td><td>Tak.</td></tr>
+  </tbody></table></div>
+  <div class="remember"><strong>Zapamiętaj</strong>Indeks tablicy indeksowanej często zaczyna się od <code>0</code>. W tablicy asocjacyjnej odwołujemy się przez nazwę klucza. <code>sort()</code> i <code>rsort()</code> zmieniają indeksowanie, a <code>asort()</code> i <code>ksort()</code> zachowują klucze.</div>
+</section>
+
+<section class="chapter" id="blok-6">
+  <div class="chapter-head"><div class="chapter-no">06</div><div><h2>Funkcje, dołączanie plików i formatowanie danych w PHP</h2><p>3 godziny · Wielokrotne użycie kodu i porządkowanie projektu</p></div></div>
+  <h3>1. Własna funkcja</h3>
+  <div class="definition"><strong>Funkcja</strong>Wydzielony fragment kodu, który realizuje określone zadanie. Można go wywoływać wielokrotnie, przekazując różne argumenty.</div>
+  <p>Funkcję deklarujemy za pomocą słowa <code>function</code>. Parametry są danymi wejściowymi, a <code>return</code> zwraca wynik do miejsca wywołania.</p>
+  <div class="code-title"><span>funkcja_przywitaj.php</span><span>PHP · parametr domyślny</span></div>
+  <pre><code>&lt;?php
+function przywitaj($imie, $powitanie = "Witaj") {
+    return "$powitanie, $imie!";
+}
+
+echo przywitaj("Anna");            // Witaj, Anna!
+echo przywitaj("Piotr", "Cześć");  // Cześć, Piotr!
+?&gt;</code></pre>
+  <p>Parametr domyślny jest wykorzystywany, gdy podczas wywołania nie przekażemy argumentu dla tego parametru. Parametry wymagane umieszcza się przed parametrami opcjonalnymi.</p>
+  <h3>2. Funkcja przyjmująca tablicę i zwracająca tablicę</h3>
+  <p>Funkcja może zwracać nie tylko pojedynczą liczbę lub tekst, lecz także całą strukturę danych. Typ argumentu można opisać, np. przez <code>array</code>.</p>
+  <div class="code-title"><span>statystyki.php</span><span>PHP · zwracanie tablicy asocjacyjnej</span></div>
+  <pre><code>&lt;?php
+function statystyki(array $liczby) {
+    if (count($liczby) === 0) {
+        return null; // brak danych do obliczeń
+    }
+
+    return [
+        "suma" =&gt; array_sum($liczby),
+        "srednia" =&gt; array_sum($liczby) / count($liczby),
+        "max" =&gt; max($liczby),
+        "min" =&gt; min($liczby),
+    ];
+}
+
+$wynik = statystyki([3, 7, 2, 9]);
+print_r($wynik);
+?&gt;</code></pre>
+  <div class="note"><strong>Dlaczego dodano sprawdzenie pustej tablicy?</strong>W materiale wyjściowym przykład dzielił sumę przez <code>count($liczby)</code>. Dla pustej tablicy liczba elementów wynosi zero, więc średniej nie da się obliczyć przez takie dzielenie. Przed wykonaniem obliczeń warto sprawdzić, czy dane istnieją.</div>
+  <h3>3. Dołączanie plików</h3>
+  <p>Duży projekt warto podzielić na pliki: osobno przechowywać nagłówek, stopkę, funkcje i konfigurację. PHP udostępnia kilka instrukcji dołączania zawartości innego pliku.</p>
+  <div class="table-wrap"><table><thead><tr><th>Instrukcja</th><th>Gdy plik nie istnieje</th><th>Typowe zastosowanie</th></tr></thead><tbody>
+    <tr><td><code>include</code></td><td>Ostrzeżenie; skrypt zwykle działa dalej.</td><td>Element opcjonalny, np. dodatkowy fragment strony.</td></tr>
+    <tr><td><code>require</code></td><td>Błąd krytyczny; dalsze wykonanie skryptu zostaje przerwane.</td><td>Plik niezbędny, np. konfiguracja połączenia z bazą.</td></tr>
+    <tr><td><code>include_once</code></td><td>Jak <code>include</code>.</td><td>Dołączenie pliku najwyżej raz.</td></tr>
+    <tr><td><code>require_once</code></td><td>Jak <code>require</code>.</td><td>Wymagany plik dołączany najwyżej raz.</td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>index.php</span><span>PHP · podział projektu na pliki</span></div>
+  <pre><code>&lt;?php
+require_once 'funkcje.php';
+include 'naglowek.php';
+
+// Główna zawartość strony
+$tekst = przywitaj("Anna");
+echo "&lt;p&gt;" . htmlspecialchars($tekst) . "&lt;/p&gt;";
+
+include 'stopka.php';
+?&gt;</code></pre>
+  <p>Przykładowa struktura katalogu:</p>
+  <div class="code-title"><span>Struktura projektu</span><span>Widok katalogów</span></div>
+  <pre><code>projekt/
+├── index.php
+├── naglowek.php
+├── stopka.php
+└── funkcje.php</code></pre>
+  <div class="warning"><strong>Unikanie wielokrotnego definiowania</strong>Jeżeli ten sam plik z definicją funkcji zostanie dołączony kilka razy, może dojść do błędu ponownej deklaracji. W takim przypadku używaj <code>require_once</code> lub <code>include_once</code>.</div>
+  <h3>4. Formatowanie danych wyjściowych</h3>
+  <p>Funkcje formatujące poprawiają czytelność liczb, tekstu i dat.</p>
+  <div class="table-wrap"><table><thead><tr><th>Funkcja</th><th>Zastosowanie</th><th>Przykład</th></tr></thead><tbody>
+    <tr><td><code>number_format()</code></td><td>Formatowanie liczby dziesiętnej.</td><td><code>number_format(12345.6789, 2, ',', ' ')</code></td></tr>
+    <tr><td><code>sprintf()</code></td><td>Tworzenie tekstu z podstawionymi wartościami.</td><td><code>sprintf("Cena: %.2f zł", 19.5)</code></td></tr>
+    <tr><td><code>date()</code></td><td>Formatowanie daty i czasu.</td><td><code>date("d-m-Y H:i:s")</code></td></tr>
+    <tr><td><code>str_pad()</code></td><td>Dopełnianie tekstu do określonej długości.</td><td><code>str_pad("5", 3, "0", STR_PAD_LEFT)</code></td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>formatowanie.php</span><span>PHP · przykładowe wyniki</span></div>
+  <pre><code>&lt;?php
+echo number_format(12345.6789, 2);           // 12,345.68
+echo number_format(12345.6789, 2, ',', ' '); // 12 345,68
+
+echo sprintf("Cena: %.2f zł", 19.5);          // Cena: 19.50 zł
+echo date("d-m-Y H:i:s");                    // np. 07-09-2026 14:30:00
+echo str_pad("5", 3, "0", STR_PAD_LEFT);     // 005
+?&gt;</code></pre>
+  <p class="small">Wynik <code>date()</code> zależy od aktualnego czasu i strefy czasowej skonfigurowanej dla PHP. Przykładowa data w komentarzu jest jedynie ilustracją formatu.</p>
+  <div class="remember"><strong>Zapamiętaj</strong><code>return</code> przekazuje wynik funkcji. <code>require</code> jest odpowiedni dla plików niezbędnych. <code>require_once</code> ogranicza ryzyko wielokrotnego dołączenia. <code>number_format()</code> i <code>sprintf()</code> służą do formatowania, a nie do walidacji danych.</div>
+</section>
+
+<section class="chapter" id="blok-7">
+  <div class="chapter-head"><div class="chapter-no">07</div><div><h2>Obsługa POST i formularze HTML</h2><p>6 godzin · Pobieranie, walidacja i przetwarzanie danych od użytkownika</p></div></div>
+  <h3>1. GET a POST — porównanie</h3>
+  <p>GET i POST to metody HTTP używane m.in. do przesyłania danych z formularza. Wybór zależy od celu żądania, a nie wyłącznie od tego, ile pól ma formularz.</p>
+  <div class="table-wrap"><table><thead><tr><th>Cecha</th><th>GET</th><th>POST</th></tr></thead><tbody>
+    <tr><td>Miejsce przekazania danych</td><td>W adresie URL, w query string.</td><td>W treści żądania HTTP.</td></tr>
+    <tr><td>Widoczność</td><td>Parametry widać w pasku adresu.</td><td>Dane nie są widoczne w pasku adresu, ale nie oznacza to automatycznie szyfrowania.</td></tr>
+    <tr><td>Typowe zastosowanie</td><td>Wyszukiwanie, filtrowanie, paginacja, linki.</td><td>Przesyłanie formularzy, zmiana danych, upload plików.</td></tr>
+    <tr><td>Zakładki i udostępnianie adresu</td><td>Parametry można zachować w URL.</td><td>Dane POST nie są zapisane w samym URL.</td></tr>
+    <tr><td>Rozmiar danych</td><td>Ograniczony długością URL obsługiwaną przez przeglądarkę i serwer.</td><td>Ograniczony konfiguracją serwera, PHP i infrastruktury; nie jest dosłownie nieograniczony.</td></tr>
+  </tbody></table></div>
+  <div class="warning"><strong>Poprawne rozumienie bezpieczeństwa</strong>POST nie szyfruje danych. Do ochrony danych przesyłanych między przeglądarką a serwerem potrzebne jest HTTPS. Hasło przesłane POST-em nadal wymaga bezpiecznego przetwarzania i przechowywania.</div>
+  <h3>2. Formularz HTML — podstawowe kontrolki</h3>
+  <p>Formularz grupuje pola, z których użytkownik wprowadza dane. Kluczowe atrybuty to:</p>
+  <ul>
+    <li><code>method</code> — metoda wysłania, np. <code>get</code> lub <code>post</code>.</li>
+    <li><code>action</code> — adres skryptu, który obsłuży formularz.</li>
+    <li><code>name</code> — nazwa pola, pod którą dane trafiają do PHP.</li>
+    <li><code>value</code> — wartość wysyłana dla danego pola.</li>
+  </ul>
+  <div class="code-title"><span>formularz.html</span><span>HTML · typy kontrolek</span></div>
+  <pre><code>&lt;form method="post" action="przetworz.php"&gt;
+    Imię:
+    &lt;input type="text" name="imie" required&gt;
+
+    Email:
+    &lt;input type="email" name="email" required&gt;
+
+    Hasło:
+    &lt;input type="password" name="haslo"&gt;
+
+    Wiek:
+    &lt;input type="number" name="wiek" min="1" max="120"&gt;
+
+    Płeć:
+    &lt;input type="radio" name="plec" value="K"&gt; Kobieta
+    &lt;input type="radio" name="plec" value="M"&gt; Mężczyzna
+
+    Zainteresowania:
+    &lt;input type="checkbox" name="zainteresowania[]" value="sport"&gt; Sport
+    &lt;input type="checkbox" name="zainteresowania[]" value="muzyka"&gt; Muzyka
+
+    Klasa:
+    &lt;select name="klasa"&gt;
+        &lt;option value="1TI"&gt;1TI&lt;/option&gt;
+        &lt;option value="3TI"&gt;3TI&lt;/option&gt;
+    &lt;/select&gt;
+
+    Komentarz:
+    &lt;textarea name="komentarz"&gt;&lt;/textarea&gt;
+
+    &lt;input type="submit" value="Wyślij" name="wyslano"&gt;
+&lt;/form&gt;</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Kontrolka</th><th>Przeznaczenie</th><th>Ważna wskazówka</th></tr></thead><tbody>
+    <tr><td><code>text</code></td><td>Pole tekstowe.</td><td>Wynik zwykle trafia jako tekst.</td></tr>
+    <tr><td><code>email</code></td><td>Adres e-mail.</td><td>Przeglądarka może sprawdzić podstawowy format, ale potrzebna jest też walidacja serwerowa.</td></tr>
+    <tr><td><code>password</code></td><td>Wprowadzanie hasła.</td><td>Maskuje tekst na ekranie, ale samo nie szyfruje transmisji.</td></tr>
+    <tr><td><code>number</code></td><td>Liczba.</td><td><code>min</code> i <code>max</code> pomagają w kontroli po stronie przeglądarki.</td></tr>
+    <tr><td><code>radio</code></td><td>Wybór jednej opcji z grupy.</td><td>Opcje jednej grupy mają tę samą nazwę <code>name</code>.</td></tr>
+    <tr><td><code>checkbox</code></td><td>Wybór wielu opcji.</td><td>Do tablicy wartości użyj nazwy zakończonej <code>[]</code>.</td></tr>
+    <tr><td><code>select</code></td><td>Lista rozwijana.</td><td>Wysyłana jest wartość wybranej opcji.</td></tr>
+    <tr><td><code>textarea</code></td><td>Wielowierszowy tekst.</td><td>Tekst znajduje się między znacznikami otwierającym i zamykającym.</td></tr>
+  </tbody></table></div>
+  <h3>3. Odczyt danych przez <code>$_POST</code></h3>
+  <p>W PHP dane przesłane metodą POST znajdują się w superglobalnej tablicy <code>$_POST</code>. Warto sprawdzić metodę żądania i zapewnić wartości domyślne.</p>
+  <div class="code-title"><span>przetworz.php</span><span>PHP · odczyt danych POST</span></div>
+  <pre><code>&lt;?php
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $imie = $_POST['imie'] ?? '';
+    $zainteresowania = $_POST['zainteresowania'] ?? [];
+
+    echo "Witaj " . htmlspecialchars($imie, ENT_QUOTES, 'UTF-8');
+    echo "! Zainteresowania: ";
+    echo htmlspecialchars(implode(", ", $zainteresowania), ENT_QUOTES, 'UTF-8');
+}
+?&gt;</code></pre>
+  <p>Checkboxy z nazwą <code>zainteresowania[]</code> mogą przekazać wiele wartości. Po stronie PHP odczytujemy je jako tablicę.</p>
+  <div class="warning"><strong>Nie ufaj strukturze danych wejściowych</strong>Nie zakładaj automatycznie, że wartość z <code>$_POST</code> jest tekstem. Użytkownik może wysłać inną strukturę, np. tablicę przez nazwę z nawiasami. W większych aplikacjach trzeba sprawdzić typ i poprawność każdego pola.</div>
+  <h3>4. Walidacja danych po stronie serwera</h3>
+  <div class="definition"><strong>Walidacja</strong>Proces sprawdzania, czy dane wejściowe spełniają określone reguły, np. czy imię nie jest puste, wiek mieści się w zakresie, a adres e-mail ma prawidłowy format.</div>
+  <p>Walidacja HTML5 (np. <code>required</code>, <code>min</code>, <code>max</code>) poprawia wygodę użytkownika, ale można ją ominąć. Ostateczną kontrolę trzeba wykonać na serwerze.</p>
+  <div class="code-title"><span>walidacja_pol.php</span><span>PHP · wymagane pole, email i zakres</span></div>
+  <pre><code>&lt;?php
+$bledy = [];
+$imie = trim($_POST['imie'] ?? '');
+$email = trim($_POST['email'] ?? '');
+$wiek = $_POST['wiek'] ?? '';
+
+if ($imie === '') {
+    $bledy[] = "Imię jest wymagane";
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $bledy[] = "Nieprawidłowy email";
+}
+
+if (!filter_var($wiek, FILTER_VALIDATE_INT) || (int)$wiek &lt; 1 || (int)$wiek &gt; 120) {
+    $bledy[] = "Wiek musi być liczbą całkowitą od 1 do 120";
+}
+?&gt;</code></pre>
+  <p><code>trim()</code> usuwa białe znaki z początku i końca tekstu. <code>filter_var()</code> umożliwia sprawdzenie m.in. adresu e-mail i liczby całkowitej.</p>
+  <h3>5. Wzorzec „formularz sam do siebie” (self-processing form)</h3>
+  <p>W tym rozwiązaniu jeden plik zawiera zarówno formularz, jak i kod, który obsługuje wysłane dane. Jest to wygodne przy małych zadaniach i prostych aplikacjach.</p>
+  <div class="code-title"><span>formularz.php</span><span>PHP + HTML · pełny schemat self-processing</span></div>
+  <pre><code>&lt;?php
+$bledy = [];
+$imie = "";
+$sukces = false;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $imie = trim($_POST['imie'] ?? '');
+
+    if ($imie === '') {
+        $bledy[] = "Imię jest wymagane";
+    }
+
+    if (empty($bledy)) {
+        $sukces = true;
+    }
+}
+?&gt;
+
+&lt;?php if ($sukces): ?&gt;
+    &lt;p&gt;Dziękujemy, &lt;?= htmlspecialchars($imie, ENT_QUOTES, 'UTF-8') ?&gt;!&lt;/p&gt;
+&lt;?php endif; ?&gt;
+
+&lt;?php foreach ($bledy as $blad): ?&gt;
+    &lt;p class="blad"&gt;&lt;?= htmlspecialchars($blad, ENT_QUOTES, 'UTF-8') ?&gt;&lt;/p&gt;
+&lt;?php endforeach; ?&gt;
+
+&lt;form method="post" action=""&gt;
+    Imię:
+    &lt;input type="text" name="imie"
+           value="&lt;?= htmlspecialchars($imie, ENT_QUOTES, 'UTF-8') ?&gt;"&gt;
+    &lt;input type="submit" value="Wyślij"&gt;
+&lt;/form&gt;</code></pre>
+  <p>Atrybut <code>action=""</code> oznacza wysłanie formularza na bieżący adres. Operator <code>&lt;?= ... ?&gt;</code> jest skróconą postacią wypisania wartości za pomocą <code>echo</code>.</p>
+  <div class="remember"><strong>Zapamiętaj — kolejność pracy z formularzem</strong>Odbierz żądanie → sprawdź metodę → odczytaj dane z wartościami domyślnymi → oczyść format (np. <code>trim()</code>) → zwaliduj → wykonaj operację → bezpiecznie wyświetl wynik.</div>
+</section>
+
+<section class="chapter" id="blok-8">
+  <div class="chapter-head"><div class="chapter-no">08</div><div><h2>Połączenie PHP z bazą danych MySQL</h2><p>6 godzin · SQL, mysqli, prepared statements oraz operacje CRUD</p></div></div>
+  <h3>1. Baza danych, tabela i rekord</h3>
+  <div class="definition"><strong>Baza danych</strong>Uporządkowany zbiór informacji zarządzany przez system bazodanowy. W relacyjnej bazie danych dane są przechowywane w tabelach złożonych z kolumn i wierszy.</div>
+  <p>W ćwiczeniu tworzymy bazę <code>szkola_pai</code> i tabelę <code>uczniowie</code>. Tabela przechowuje dane uczniów, a każdy wiersz odpowiada jednemu rekordowi.</p>
+  <div class="code-title"><span>baza.sql</span><span>SQL · definicja tabeli</span></div>
+  <pre><code>CREATE TABLE uczniowie (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    imie VARCHAR(50) NOT NULL,
+    nazwisko VARCHAR(50) NOT NULL,
+    klasa VARCHAR(10) NOT NULL,
+    ocena_srednia DECIMAL(3,2) DEFAULT 0
+);</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Element</th><th>Znaczenie</th></tr></thead><tbody>
+    <tr><td><code>INT</code></td><td>Liczba całkowita.</td></tr>
+    <tr><td><code>AUTO_INCREMENT</code></td><td>Automatyczne zwiększanie wartości identyfikatora.</td></tr>
+    <tr><td><code>PRIMARY KEY</code></td><td>Klucz główny jednoznacznie identyfikujący rekord.</td></tr>
+    <tr><td><code>VARCHAR(n)</code></td><td>Tekst o zmiennej długości, maksymalnie do podanej liczby znaków.</td></tr>
+    <tr><td><code>NOT NULL</code></td><td>Kolumna musi otrzymać wartość, nie może być <code>NULL</code>.</td></tr>
+    <tr><td><code>DECIMAL(3,2)</code></td><td>Liczba dziesiętna z maksymalnie trzema cyframi łącznie, w tym dwiema po przecinku dziesiętnym.</td></tr>
+    <tr><td><code>DEFAULT 0</code></td><td>Wartość domyślna, gdy nie podano innej.</td></tr>
+  </tbody></table></div>
+  <p>W phpMyAdmin otwórz <code>http://localhost/phpmyadmin</code>, utwórz bazę <code>szkola_pai</code>, a następnie skorzystaj z zakładki „Import”, aby wczytać przygotowany plik SQL, jeśli jest dostępny.</p>
+  <h3>2. Połączenie z bazą przez mysqli</h3>
+  <p>Rozszerzenie <code>mysqli</code> umożliwia komunikację PHP z bazami MySQL. Dane połączenia wygodnie umieścić w osobnym pliku <code>config.php</code>.</p>
+  <div class="code-title"><span>config.php</span><span>PHP · konfiguracja połączenia</span></div>
+  <pre><code>&lt;?php
+$host = "localhost";
+$user = "root";
+$pass = ""; // typowa konfiguracja lokalnego XAMPP
+$dbname = "szkola_pai";
+
+$polaczenie = new mysqli($host, $user, $pass, $dbname);
+
+if ($polaczenie-&gt;connect_error) {
+    die("Błąd połączenia: " . $polaczenie-&gt;connect_error);
+}
+
+$polaczenie-&gt;set_charset("utf8mb4");
+?&gt;</code></pre>
+  <p>W pliku korzystającym z bazy dołącz konfigurację:</p>
+  <div class="code-title"><span>lista.php</span><span>PHP · dołączenie konfiguracji</span></div>
+  <pre><code>&lt;?php
+require_once 'config.php';
+// Dalej można wykonywać zapytania SQL.
+?&gt;</code></pre>
+  <div class="warning"><strong>Uwaga dotycząca konfiguracji</strong>Puste hasło użytkownika <code>root</code> jest spotykane w lokalnym środowisku szkoleniowym, ale nie powinno być przenoszone do wdrożonej aplikacji. W rzeczywistym projekcie używa się osobnego użytkownika z ograniczonymi uprawnieniami i silnego hasła. Kontrolę błędu połączenia należy przeprowadzić przed wywołaniem kolejnych metod na połączeniu.</div>
+  <h3>3. SELECT — pobieranie danych</h3>
+  <p><code>SELECT</code> odczytuje rekordy. Wynik zapytania można przeglądać w pętli, pobierając każdy wiersz jako tablicę asocjacyjną.</p>
+  <div class="code-title"><span>lista.php</span><span>PHP · SELECT i fetch_assoc()</span></div>
+  <pre><code>&lt;?php
+require_once 'config.php';
+
+$wynik = $polaczenie-&gt;query(
+    "SELECT * FROM uczniowie ORDER BY nazwisko"
+);
+
+while ($wiersz = $wynik-&gt;fetch_assoc()) {
+    echo htmlspecialchars($wiersz['imie'], ENT_QUOTES, 'UTF-8') . " ";
+    echo htmlspecialchars($wiersz['nazwisko'], ENT_QUOTES, 'UTF-8') . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+  <p><code>ORDER BY nazwisko</code> porządkuje wynik według nazwiska. <code>fetch_assoc()</code> pobiera kolejny wiersz jako tablicę, w której kluczami są nazwy kolumn.</p>
+  <h3>4. Prepared statements — ochrona przed SQL Injection</h3>
+  <div class="definition"><strong>SQL Injection</strong>Atak polegający na wprowadzeniu do danych wejściowych fragmentu, który może zmienić strukturę lub znaczenie zapytania SQL. Ryzyko pojawia się m.in. przy bezpośrednim łączeniu tekstu użytkownika z treścią zapytania.</div>
+  <p>Zapytania przygotowane oddzielają strukturę zapytania od przekazywanych wartości. Znak <code>?</code> jest miejscem na parametr, a <code>bind_param()</code> przypisuje do niego dane.</p>
+  <div class="code-title"><span>Niepoprawny przykład</span><span>PHP · podatność na SQL Injection</span></div>
+  <pre><code>&lt;?php
+// NIE RÓB TAK:
+$sql = "SELECT * FROM uczniowie WHERE klasa = '" . $_GET['klasa'] . "'";
+$wynik = $polaczenie-&gt;query($sql);
+?&gt;</code></pre>
+  <div class="code-title"><span>Poprawny przykład</span><span>PHP · prepared statement</span></div>
+  <pre><code>&lt;?php
+$klasa = $_GET['klasa'] ?? '';
+
+$stmt = $polaczenie-&gt;prepare(
+    "SELECT * FROM uczniowie WHERE klasa = ?"
+);
+$stmt-&gt;bind_param("s", $klasa); // s oznacza string
+$stmt-&gt;execute();
+$wynik = $stmt-&gt;get_result();
+
+while ($wiersz = $wynik-&gt;fetch_assoc()) {
+    echo htmlspecialchars($wiersz['imie'], ENT_QUOTES, 'UTF-8') . "&lt;br&gt;";
+}
+$stmt-&gt;close();
+?&gt;</code></pre>
+  <p>Typowe oznaczenia używane w <code>bind_param()</code>:</p>
+  <div class="table-wrap"><table><thead><tr><th>Znak</th><th>Typ</th><th>Przykład</th></tr></thead><tbody><tr><td><code>i</code></td><td>integer</td><td>Identyfikator rekordu</td></tr><tr><td><code>d</code></td><td>double</td><td>Liczba zmiennoprzecinkowa</td></tr><tr><td><code>s</code></td><td>string</td><td>Imię, nazwisko, klasa</td></tr><tr><td><code>b</code></td><td>blob</td><td>Dane binarne</td></tr></tbody></table></div>
+  <div class="warning"><strong>Ważna granica prepared statements</strong>Parametry <code>?</code> służą do przekazywania wartości, a nie nazw tabel, kolumn czy fragmentów SQL. Dynamiczne sortowanie kolumny trzeba oprzeć na własnej liście dozwolonych nazw, a nie bezpośrednio na tekście użytkownika.</div>
+  <h3>5. INSERT — dodawanie rekordu</h3>
+  <p><code>INSERT INTO</code> dodaje nowy wiersz do tabeli. Po wykonaniu zapytania można odczytać identyfikator automatycznie utworzonego rekordu przez <code>insert_id</code>.</p>
+  <div class="code-title"><span>dodaj.php</span><span>PHP · INSERT</span></div>
+  <pre><code>&lt;?php
+$imie = "Anna";
+$nazwisko = "Kowalska";
+$klasa = "3TI";
+$ocena = 4.75;
+
+$stmt = $polaczenie-&gt;prepare(
+    "INSERT INTO uczniowie (imie, nazwisko, klasa, ocena_srednia)
+     VALUES (?, ?, ?, ?)"
+);
+$stmt-&gt;bind_param("sssd", $imie, $nazwisko, $klasa, $ocena);
+$stmt-&gt;execute();
+
+echo "Dodano ucznia, ID: " . $polaczenie-&gt;insert_id;
+$stmt-&gt;close();
+?&gt;</code></pre>
+  <p>Łańcuch <code>"sssd"</code> opisuje kolejno typy czterech parametrów: tekst, tekst, tekst, liczba zmiennoprzecinkowa.</p>
+  <h3>6. UPDATE — aktualizacja rekordu</h3>
+  <p><code>UPDATE</code> zmienia wartości istniejących rekordów. Warunek <code>WHERE</code> wskazuje, które wiersze mają zostać zmodyfikowane.</p>
+  <div class="code-title"><span>aktualizuj.php</span><span>PHP · UPDATE</span></div>
+  <pre><code>&lt;?php
+$nowaOcena = 4.5;
+$id = 7;
+
+$stmt = $polaczenie-&gt;prepare(
+    "UPDATE uczniowie SET ocena_srednia = ? WHERE id = ?"
+);
+$stmt-&gt;bind_param("di", $nowaOcena, $id);
+$stmt-&gt;execute();
+$stmt-&gt;close();
+?&gt;</code></pre>
+  <div class="warning"><strong>Nie zapomnij o WHERE</strong>Zapytanie <code>UPDATE</code> bez warunku może zmienić dane we wszystkich wierszach tabeli. Przed wykonaniem operacji sprawdź, czy warunek wskazuje właściwy rekord.</div>
+  <h3>7. DELETE — usuwanie rekordu</h3>
+  <div class="code-title"><span>usun.php</span><span>PHP · DELETE</span></div>
+  <pre><code>&lt;?php
+$id = 7;
+
+$stmt = $polaczenie-&gt;prepare(
+    "DELETE FROM uczniowie WHERE id = ?"
+);
+$stmt-&gt;bind_param("i", $id);
+$stmt-&gt;execute();
+$stmt-&gt;close();
+?&gt;</code></pre>
+  <p>W aplikacji internetowej operację usuwania należy dodatkowo chronić przed przypadkowym wywołaniem. Najczęściej stosuje się formularz POST, potwierdzenie i token CSRF — nie powinno się usuwać rekordu tylko dlatego, że ktoś otworzył link GET.</p>
+  <h3>8. CRUD — cztery podstawowe operacje</h3>
+  <div class="table-wrap"><table><thead><tr><th>Skrót</th><th>Operacja</th><th>SQL</th><th>Przykładowy plik projektu</th></tr></thead><tbody>
+    <tr><td>C</td><td>Create — utwórz</td><td><code>INSERT</code></td><td><code>dodaj.php</code></td></tr>
+    <tr><td>R</td><td>Read — odczytaj</td><td><code>SELECT</code></td><td><code>lista.php</code></td></tr>
+    <tr><td>U</td><td>Update — zaktualizuj</td><td><code>UPDATE</code></td><td><code>edytuj.php</code></td></tr>
+    <tr><td>D</td><td>Delete — usuń</td><td><code>DELETE</code></td><td><code>usun.php</code></td></tr>
+  </tbody></table></div>
+  <p>Praktyczny projekt „CRUD uczniowie” składa się z listy rekordów, formularza dodawania, formularza edycji oraz kontrolowanej operacji usuwania.</p>
+  <div class="flow"><span class="step">Formularz</span><span class="arrow">→</span><span class="step">PHP</span><span class="arrow">→</span><span class="step">Prepared statement</span><span class="arrow">→</span><span class="step">MySQL</span><span class="arrow">→</span><span class="step">Wynik</span></div>
+  <div class="remember"><strong>Zapamiętaj</strong>Używaj <code>require_once</code> do konfiguracji, <code>utf8mb4</code> dla poprawnej obsługi Unicode, prepared statements dla wartości wejściowych, <code>htmlspecialchars()</code> przy wypisywaniu danych do HTML i warunku <code>WHERE</code> przy aktualizacji oraz usuwaniu wybranych rekordów.</div>
+</section>
+
+<section class="chapter" id="blok-9">
+  <div class="chapter-head"><div class="chapter-no">09</div><div><h2>Funkcje tekstowe i tablicowe w PHP</h2><p>3 godziny · Przetwarzanie, wyszukiwanie i porządkowanie danych</p></div></div>
+  <h3>1. Podstawowe funkcje tekstowe</h3>
+  <div class="table-wrap"><table><thead><tr><th>Funkcja</th><th>Działanie</th></tr></thead><tbody>
+    <tr><td><code>strlen($tekst)</code></td><td>Zwraca długość tekstu w bajtach.</td></tr>
+    <tr><td><code>trim($tekst)</code></td><td>Usuwa białe znaki z początku i końca.</td></tr>
+    <tr><td><code>strtoupper($tekst)</code></td><td>Zmienia litery na wielkie.</td></tr>
+    <tr><td><code>strtolower($tekst)</code></td><td>Zmienia litery na małe.</td></tr>
+    <tr><td><code>ucfirst($tekst)</code></td><td>Zmienia pierwszą literę tekstu na wielką.</td></tr>
+    <tr><td><code>substr($tekst, $start, $dlugosc)</code></td><td>Zwraca fragment tekstu.</td></tr>
+    <tr><td><code>str_replace($szukaj, $zamien, $tekst)</code></td><td>Zamienia wskazany fragment tekstu.</td></tr>
+    <tr><td><code>strpos($tekst, $szukaj)</code></td><td>Zwraca pozycję pierwszego wystąpienia albo <code>false</code>.</td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>funkcje_tekstowe.php</span><span>PHP · operacje na stringach</span></div>
+  <pre><code>&lt;?php
+$tekst = "  Programowanie Aplikacji Internetowych  ";
+
+echo strlen($tekst);              // długość w bajtach
+echo trim($tekst);                // bez skrajnych spacji
+echo strtoupper($tekst);          // WIELKIE LITERY
+echo strtolower($tekst);          // małe litery
+echo ucfirst("ala ma kota");      // Ala ma kota
+echo substr("Informatyka", 0, 4); // Info
+
+echo str_replace("Aplikacji", "Systemów", $tekst);
+echo strpos("Informatyka", "mat"); // 3
+?&gt;</code></pre>
+  <div class="warning"><strong>Tekst UTF-8 i polskie znaki</strong><code>strlen()</code> i <code>substr()</code> pracują na bajtach, a nie na znakach rozumianych przez użytkownika. Przy tekstach UTF-8 z polskimi literami mogą dawać wyniki inne od oczekiwanych. Do operacji znakowych używaj odpowiedników z rodziny <code>mb_*</code>, np. <code>mb_strlen()</code> i <code>mb_substr()</code>.</div>
+  <h3>2. Wyszukiwanie za pomocą <code>strpos()</code></h3>
+  <p>Wynik <code>strpos()</code> może być liczbą <code>0</code>, gdy szukany fragment znajduje się na początku. Nie należy więc sprawdzać go warunkiem, który uznaje zero za fałsz.</p>
+  <div class="code-title"><span>strpos.php</span><span>PHP · poprawne sprawdzenie wyniku</span></div>
+  <pre><code>&lt;?php
+$pozycja = strpos("PHP jest popularne", "PHP");
+
+if ($pozycja !== false) {
+    echo "Znaleziono na pozycji: " . $pozycja;
+} else {
+    echo "Nie znaleziono";
+}
+?&gt;</code></pre>
+  <h3>3. Dzielenie i łączenie tekstu — explode i implode</h3>
+  <p><code>explode()</code> dzieli tekst według separatora i tworzy tablicę. <code>implode()</code> łączy elementy tablicy w jeden tekst.</p>
+  <div class="code-title"><span>explode_implode.php</span><span>PHP · tekst rozdzielany przecinkami</span></div>
+  <pre><code>&lt;?php
+$csv = "Anna,Kowalska,3TI";
+$dane = explode(",", $csv);
+// ["Anna", "Kowalska", "3TI"]
+
+echo implode(" - ", $dane);
+// Anna - Kowalska - 3TI
+
+$slowa = explode(" ", "Ala ma kota");
+echo count($slowa); // 3
+?&gt;</code></pre>
+  <h3>4. Wyrażenia regularne — podstawy</h3>
+  <div class="definition"><strong>Wyrażenie regularne (regex)</strong>Wzorzec opisujący ciąg znaków, który ma spełniać określone reguły. Może służyć do wyszukiwania lub sprawdzania formatu tekstu.</div>
+  <p>W PHP do sprawdzania dopasowania do wzorca służy m.in. <code>preg_match()</code>.</p>
+  <div class="table-wrap"><table><thead><tr><th>Element wzorca</th><th>Znaczenie</th></tr></thead><tbody>
+    <tr><td><code>^</code></td><td>Początek tekstu.</td></tr><tr><td><code>$</code></td><td>Koniec tekstu.</td></tr><tr><td><code>[a-z]</code></td><td>Mała litera od a do z.</td></tr><tr><td><code>[A-Z]</code></td><td>Wielka litera od A do Z.</td></tr><tr><td><code>\d</code></td><td>Cyfra.</td></tr><tr><td><code>\w</code></td><td>Znak słowa (zależnie od trybu m.in. litera, cyfra lub podkreślenie).</td></tr><tr><td><code>+</code></td><td>Co najmniej jedno wystąpienie poprzedniego elementu.</td></tr><tr><td><code>{6}</code></td><td>Dokładnie sześć wystąpień.</td></tr></tbody></table></div>
+  <div class="code-title"><span>regex.php</span><span>PHP · trzy proste wzorce</span></div>
+  <pre><code>&lt;?php
+if (preg_match('/^[a-zA-Z]+$/', "Anna")) {
+    echo "Tylko litery łacińskie";
+}
+
+if (preg_match('/^\d{6}$/', "123456")) {
+    echo "Dokładnie 6 cyfr";
+}
+
+$email = "test@example.com";
+if (preg_match('/^[\w.-]+@[\w.-]+\.\w+$/', $email)) {
+    echo "Email ma oczekiwany kształt";
+}
+?&gt;</code></pre>
+  <div class="note"><strong>Uwaga o walidacji adresu e-mail</strong>Ostatni wzorzec jest uproszczonym przykładem edukacyjnym, a nie pełną implementacją wszystkich reguł adresów e-mail. W typowych formularzach PHP można użyć <code>filter_var($email, FILTER_VALIDATE_EMAIL)</code>.</div>
+  <h3>5. Dodatkowe funkcje tablicowe</h3>
+  <div class="table-wrap"><table><thead><tr><th>Funkcja</th><th>Zastosowanie</th></tr></thead><tbody>
+    <tr><td><code>array_unique()</code></td><td>Usuwa powtarzające się wartości.</td></tr>
+    <tr><td><code>array_merge()</code></td><td>Łączy tablice.</td></tr>
+    <tr><td><code>array_slice()</code></td><td>Pobiera wskazany fragment tablicy.</td></tr>
+    <tr><td><code>array_search()</code></td><td>Wyszukuje wartość i zwraca jej klucz lub <code>false</code>.</td></tr>
+    <tr><td><code>usort()</code></td><td>Sortuje tablicę według własnej funkcji porównującej; indeksy są nadawane ponownie.</td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>rozszerzone_tablice.php</span><span>PHP · mapowanie, łączenie, sortowanie</span></div>
+  <pre><code>&lt;?php
+$a = [1, 2, 2, 3, 3, 3];
+$unikalne = array_unique($a);        // [1, 2, 3]
+
+$b = array_merge([1, 2], [3, 4]);    // [1, 2, 3, 4]
+$c = array_slice([1, 2, 3, 4, 5], 1, 3); // [2, 3, 4]
+
+$pozycja = array_search(3, [1, 2, 3, 4], true); // 2
+
+$imiona = ["Kasia", "Ala", "Zosia"];
+usort($imiona, fn($a, $b) =&gt; strcmp($a, $b));
+print_r($imiona); // ["Ala", "Kasia", "Zosia"]
+?&gt;</code></pre>
+  <h3>6. Łączenie tekstu i tablic — praktyczny przykład</h3>
+  <p>Jeśli dane są zapisane w jednym wierszu i oddzielone średnikami, możemy rozdzielić je na zmienne.</p>
+  <div class="code-title"><span>odczyt_wiersza.php</span><span>PHP · przypisanie elementów tablicy</span></div>
+  <pre><code>&lt;?php
+$linia = "Anna;Kowalska;3TI;5.0";
+[$imie, $nazwisko, $klasa, $ocena] = explode(";", $linia);
+
+echo "$imie $nazwisko, klasa $klasa, ocena $ocena";
+?&gt;</code></pre>
+  <div class="remember"><strong>Zapamiętaj</strong><code>explode()</code> dzieli tekst, <code>implode()</code> łączy tablicę, <code>preg_match()</code> sprawdza wzorzec, a <code>array_search()</code> może zwrócić klucz <code>0</code> — sprawdzaj wynik przez <code>!== false</code>.</div>
+</section>
+
+<section class="chapter" id="blok-10">
+  <div class="chapter-head"><div class="chapter-no">10</div><div><h2>Obsługa plików w PHP</h2><p>3 godziny · Odczyt, zapis, katalogi i przesyłanie plików</p></div></div>
+  <h3>1. Prosty zapis i odczyt plików</h3>
+  <p>PHP udostępnia funkcje pozwalające zapisywać tekst do pliku, odczytywać jego zawartość i pobierać linie. Ścieżki względne są interpretowane względem katalogu roboczego skryptu — w większym projekcie warto świadomie kontrolować ścieżki.</p>
+  <div class="code-title"><span>zapis_odczyt.php</span><span>PHP · file_put_contents i file_get_contents</span></div>
+  <pre><code>&lt;?php
+// Zapis — jeśli plik istnieje, jego zawartość zostanie zastąpiona.
+file_put_contents("dane/notatka.txt", "Pierwsza linia\n");
+
+// Dopisanie na końcu pliku.
+file_put_contents(
+    "dane/notatka.txt",
+    "Druga linia\n",
+    FILE_APPEND
+);
+
+$zawartosc = file_get_contents("dane/notatka.txt");
+echo nl2br(htmlspecialchars($zawartosc, ENT_QUOTES, 'UTF-8'));
+
+$linie = file("dane/notatka.txt", FILE_IGNORE_NEW_LINES);
+?&gt;</code></pre>
+  <ul>
+    <li><code>file_put_contents()</code> zapisuje dane; domyślnie zastępuje dotychczasową zawartość pliku.</li>
+    <li><code>FILE_APPEND</code> dopisuje dane na końcu.</li>
+    <li><code>file_get_contents()</code> odczytuje całą zawartość jako tekst.</li>
+    <li><code>file()</code> zwraca tablicę, której elementami są kolejne linie.</li>
+    <li><code>nl2br()</code> zamienia znaki końca linii na znaczniki <code>&lt;br&gt;</code> w prezentacji HTML.</li>
+  </ul>
+  <div class="warning"><strong>Katalog musi istnieć</strong>Przed zapisem do <code>dane/notatka.txt</code> upewnij się, że katalog <code>dane</code> istnieje i serwer ma prawo zapisu. Funkcje plikowe mogą zwracać <code>false</code> w razie błędu.</div>
+  <h3>2. Operacje niskopoziomowe — fopen, fread, fwrite, fclose</h3>
+  <p>Przy otwieraniu pliku określamy tryb pracy. Po zakończeniu pracy należy zamknąć uchwyt funkcją <code>fclose()</code>.</p>
+  <div class="table-wrap"><table><thead><tr><th>Tryb</th><th>Znaczenie</th></tr></thead><tbody>
+    <tr><td><code>r</code></td><td>Odczyt; plik musi istnieć.</td></tr>
+    <tr><td><code>w</code></td><td>Zapis; tworzy plik lub usuwa dotychczasową zawartość istniejącego.</td></tr>
+    <tr><td><code>a</code></td><td>Dopisanie na końcu; tworzy plik, jeśli go nie ma.</td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>fopen_fwrite.php</span><span>PHP · dopisywanie do pliku</span></div>
+  <pre><code>&lt;?php
+$uchwyt = fopen("dane/notatka.txt", "a");
+if ($uchwyt !== false) {
+    fwrite($uchwyt, "Kolejna linia\n");
+    fclose($uchwyt);
+}
+?&gt;</code></pre>
+  <div class="code-title"><span>fopen_fgets.php</span><span>PHP · odczyt linia po linii</span></div>
+  <pre><code>&lt;?php
+$uchwyt = fopen("dane/notatka.txt", "r");
+
+if ($uchwyt !== false) {
+    while (($linia = fgets($uchwyt)) !== false) {
+        echo htmlspecialchars($linia, ENT_QUOTES, 'UTF-8') . "&lt;br&gt;";
+    }
+    fclose($uchwyt);
+}
+?&gt;</code></pre>
+  <p>Warunek z <code>fgets()</code> sprawdza bezpośrednio, czy odczytano kolejną linię. Jest czytelniejszy i bezpieczniejszy niż ręczne pobieranie danych po sprawdzeniu samego <code>feof()</code>.</p>
+  <h3>3. Sprawdzanie i zarządzanie plikami</h3>
+  <div class="code-title"><span>operacje_plikowe.php</span><span>PHP · istnienie i rozmiar</span></div>
+  <pre><code>&lt;?php
+$sciezka = "dane/notatka.txt";
+
+if (file_exists($sciezka)) {
+    echo "Plik istnieje";
+    echo filesize($sciezka) . " bajtów";
+}
+
+// unlink($sciezka);        // usuwa plik
+// mkdir("dane/nowy_katalog"); // tworzy katalog
+?&gt;</code></pre>
+  <p><code>file_exists()</code> sprawdza istnienie ścieżki, <code>filesize()</code> zwraca rozmiar w bajtach, <code>unlink()</code> usuwa plik, a <code>mkdir()</code> tworzy katalog.</p>
+  <div class="warning"><strong>Operacje destrukcyjne</strong><code>unlink()</code> trwale usuwa plik z systemu plików. Nie wywołuj go na ścieżce pochodzącej bezpośrednio od użytkownika bez bardzo dokładnej kontroli.</div>
+  <h3>4. Upload plików — formularz HTML</h3>
+  <p>Formularz przesyłający plik wymaga metody POST oraz atrybutu <code>enctype="multipart/form-data"</code>. Bez tego plik nie zostanie prawidłowo przekazany.</p>
+  <div class="code-title"><span>upload.html</span><span>HTML · pole do przesłania pliku</span></div>
+  <pre><code>&lt;form method="post" action="upload.php" enctype="multipart/form-data"&gt;
+    &lt;input type="file" name="plik"&gt;
+    &lt;input type="submit" value="Wgraj"&gt;
+&lt;/form&gt;</code></pre>
+  <h3>5. Odbieranie przesłanego pliku — <code>$_FILES</code></h3>
+  <p>Informacje o pliku trafiają do superglobalnej tablicy <code>$_FILES</code>. W typowym procesie PHP sprawdzamy status uploadu, nazwę, rozszerzenie i przenosimy plik z lokalizacji tymczasowej do docelowej.</p>
+  <div class="code-title"><span>upload.php</span><span>PHP · uproszczony schemat uploadu</span></div>
+  <pre><code>&lt;?php
+if (
+    isset($_FILES['plik']) &amp;&amp;
+    $_FILES['plik']['error'] === UPLOAD_ERR_OK
+) {
+    $nazwaOryginalna = basename($_FILES['plik']['name']);
+    $dozwolone = ['jpg', 'jpeg', 'png', 'gif', 'txt', 'pdf'];
+    $rozszerzenie = strtolower(
+        pathinfo($nazwaOryginalna, PATHINFO_EXTENSION)
+    );
+
+    if (in_array($rozszerzenie, $dozwolone, true)) {
+        $nazwaDocelowa = bin2hex(random_bytes(16)) . '.' . $rozszerzenie;
+        $docelowa = "uploads/" . $nazwaDocelowa;
+
+        if (move_uploaded_file($_FILES['plik']['tmp_name'], $docelowa)) {
+            echo "Plik wgrany poprawnie";
+        } else {
+            echo "Nie udało się zapisać pliku";
+        }
+    } else {
+        echo "Niedozwolony typ pliku!";
+    }
+}
+?&gt;</code></pre>
+  <p>Przykład pokazuje podstawowy schemat i dodatkowo nadaje plikowi losową nazwę, aby ograniczyć ryzyko kolizji i wykorzystania nazwy podanej przez użytkownika. W pełnej aplikacji trzeba również sprawdzić rozmiar pliku, rzeczywisty typ MIME, błędy uploadu, uprawnienia katalogu i politykę przechowywania.</p>
+  <div class="warning"><strong>Bezpieczeństwo uploadu</strong>Samo sprawdzenie rozszerzenia nie gwarantuje, że plik ma deklarowany format. Sprawdzaj typ MIME po stronie serwera, ogranicz rozmiar, nie ufaj oryginalnej nazwie i przechowuj pliki w katalogu, w którym nie można wykonywać skryptów PHP. Niektóre typy plików mogą zawierać aktywną treść.</div>
+  <div class="remember"><strong>Zapamiętaj</strong><code>file_put_contents()</code> zapisuje, <code>file_get_contents()</code> odczytuje, <code>fopen()</code> otwiera plik, <code>fwrite()</code> zapisuje, <code>fgets()</code> czyta linię, a <code>fclose()</code> zamyka uchwyt. Upload wymaga <code>multipart/form-data</code> i danych z <code>$_FILES</code>.</div>
+</section>
+
+<section class="chapter" id="blok-11">
+  <div class="chapter-head"><div class="chapter-no">11</div><div><h2>Serializacja danych — JSON i format PHP</h2><p>3 godziny · Zamiana struktur danych na tekst i odtwarzanie ich</p></div></div>
+  <h3>1. Czym jest serializacja?</h3>
+  <div class="definition"><strong>Serializacja</strong>Proces zamiany danych lub struktur danych, np. tablicy albo obiektu, na postać, którą można zapisać w pliku lub przesłać przez sieć. Deserializacja odtwarza strukturę na podstawie zapisanego formatu.</div>
+  <p>W aplikacjach internetowych bardzo często wykorzystuje się JSON (JavaScript Object Notation). Jest tekstowym formatem wymiany danych, zrozumiałym dla PHP, JavaScript i wielu innych języków.</p>
+  <div class="flow"><span class="step">Tablica PHP</span><span class="arrow">→ json_encode() →</span><span class="step">Tekst JSON</span><span class="arrow">→ json_decode() →</span><span class="step">Tablica/obiekt PHP</span></div>
+  <h3>2. <code>json_encode()</code> — PHP do JSON</h3>
+  <div class="code-title"><span>php_do_json.php</span><span>PHP · kodowanie</span></div>
+  <pre><code>&lt;?php
+$uczen = [
+    "imie" =&gt; "Anna",
+    "wiek" =&gt; 17,
+    "oceny" =&gt; [5, 4, 5]
+];
+
+$json = json_encode($uczen);
+echo $json;
+// {"imie":"Anna","wiek":17,"oceny":[5,4,5]}
+
+echo json_encode(
+    $uczen,
+    JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+);
+?&gt;</code></pre>
+  <p><code>JSON_PRETTY_PRINT</code> poprawia czytelność przez wcięcia i nowe linie, a <code>JSON_UNESCAPED_UNICODE</code> pozwala zapisywać znaki Unicode bez zamiany ich na sekwencje escape.</p>
+  <h3>3. <code>json_decode()</code> — JSON do PHP</h3>
+  <p>Domyślnie <code>json_decode()</code> zwraca obiekt <code>stdClass</code> dla obiektu JSON. Przekazanie drugiego argumentu <code>true</code> powoduje zwrócenie tablic asocjacyjnych.</p>
+  <div class="code-title"><span>json_do_php.php</span><span>PHP · odczyt jako tablica lub obiekt</span></div>
+  <pre><code>&lt;?php
+$json = '{"imie":"Anna","wiek":17}';
+
+$dane = json_decode($json, true);
+echo $dane["imie"]; // Anna
+
+$obiekt = json_decode($json);
+echo $obiekt-&gt;imie;  // Anna
+?&gt;</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Wywołanie</th><th>Wynik</th><th>Dostęp do imienia</th></tr></thead><tbody>
+    <tr><td><code>json_decode($json, true)</code></td><td>Tablica asocjacyjna</td><td><code>$dane['imie']</code></td></tr>
+    <tr><td><code>json_decode($json)</code></td><td>Obiekt <code>stdClass</code></td><td><code>$obiekt-&gt;imie</code></td></tr>
+  </tbody></table></div>
+  <h3>4. Zapis i odczyt pliku JSON</h3>
+  <div class="code-title"><span>uczniowie_json.php</span><span>PHP · plik JSON</span></div>
+  <pre><code>&lt;?php
+$uczniowie = [
+    ["imie" =&gt; "Anna", "ocena" =&gt; 5],
+    ["imie" =&gt; "Piotr", "ocena" =&gt; 3],
+];
+
+$json = json_encode(
+    $uczniowie,
+    JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE
+);
+file_put_contents("dane/uczniowie.json", $json);
+
+$tekst = file_get_contents("dane/uczniowie.json");
+$wczytani = json_decode($tekst, true);
+
+foreach ($wczytani as $u) {
+    echo htmlspecialchars($u["imie"], ENT_QUOTES, 'UTF-8');
+    echo " - " . (int)$u["ocena"] . "&lt;br&gt;";
+}
+?&gt;</code></pre>
+  <p>Plik JSON może służyć do przechowywania niewielkich struktur danych lub do przekazywania danych pomiędzy częściami aplikacji. Przy równoczesnym zapisie wielu użytkowników trzeba uwzględnić ryzyko nadpisania zmian — w większych systemach bazodanowych zwykle lepiej sprawdza się baza danych.</p>
+  <h3>5. <code>serialize()</code> i <code>unserialize()</code> — format PHP</h3>
+  <p>PHP ma własny mechanizm serializacji, który zapisuje informację o typach i strukturze w formacie przeznaczonym głównie dla PHP.</p>
+  <div class="code-title"><span>serializacja_php.php</span><span>PHP · serialize i unserialize</span></div>
+  <pre><code>&lt;?php
+$dane = ["a" =&gt; 1, "b" =&gt; [2, 3]];
+
+$serial = serialize($dane);
+echo $serial;
+
+$oryginal = unserialize($serial);
+print_r($oryginal);
+?&gt;</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Cecha</th><th>JSON</th><th>serialize()</th></tr></thead><tbody>
+    <tr><td>Czytelność</td><td>Dość czytelny tekst.</td><td>Format techniczny, mniej czytelny.</td></tr>
+    <tr><td>Kompatybilność</td><td>Wiele języków i platform.</td><td>Format specyficzny dla PHP.</td></tr>
+    <tr><td>Typowe zastosowanie</td><td>API, wymiana danych z JavaScript i innymi systemami.</td><td>Wewnętrzne przechowywanie danych PHP, np. niektóre mechanizmy cache.</td></tr>
+  </tbody></table></div>
+  <div class="warning"><strong>Nie deserializuj niezaufanych danych</strong>Wywołanie <code>unserialize()</code> na danych kontrolowanych przez użytkownika może prowadzić do niebezpiecznych skutków, zwłaszcza gdy w grę wchodzą obiekty i ich metody. Do wymiany danych z zewnętrznymi systemami preferuj JSON i weryfikuj otrzymane wartości.</div>
+  <h3>6. API zwracające JSON</h3>
+  <p>Serwer może zwracać dane JSON zamiast strony HTML. Nagłówek <code>Content-Type</code> informuje klienta o formacie odpowiedzi.</p>
+  <div class="code-title"><span>api.php</span><span>PHP · odpowiedź JSON</span></div>
+  <pre><code>&lt;?php
+header('Content-Type: application/json; charset=utf-8');
+
+echo json_encode([
+    "status" =&gt; "ok",
+    "wynik" =&gt; 42
+], JSON_UNESCAPED_UNICODE);
+?&gt;</code></pre>
+  <p>Taki format jest często używany przy komunikacji asynchronicznej z JavaScript, np. przez AJAX lub Fetch API. W przekazanym planie kursu temat ten jest zapowiedziany do rozwinięcia w dalszej części zajęć.</p>
+  <div class="remember"><strong>Zapamiętaj</strong><code>json_encode()</code> zamienia dane PHP na tekst JSON, a <code>json_decode()</code> odtwarza dane. Argument <code>true</code> oznacza tablicę asocjacyjną. JSON jest dobrym formatem wymiany danych między PHP i JavaScript.</div>
+</section>
+
+<section class="chapter" id="blok-12">
+  <div class="chapter-head"><div class="chapter-no">12</div><div><h2>Sesje i ciasteczka w PHP</h2><p>3 godziny · Zapamiętywanie informacji pomiędzy żądaniami HTTP</p></div></div>
+  <h3>1. Problem bezstanowości HTTP</h3>
+  <div class="definition"><strong>Bezstanowość HTTP</strong>Każde żądanie HTTP jest niezależne. Serwer nie pamięta automatycznie, co użytkownik zrobił w poprzednim żądaniu. Aby zachować informacje między odwiedzinami stron, aplikacja korzysta m.in. z sesji i ciasteczek.</div>
+  <p>Przykład: użytkownik loguje się na stronie. Po przejściu z formularza logowania do panelu serwer musi rozpoznać, że kolejne żądanie pochodzi od zalogowanego użytkownika. Służy do tego identyfikator sesji.</p>
+  <h3>2. Sesje — <code>$_SESSION</code></h3>
+  <p>Sesja przechowuje dane po stronie serwera. Przeglądarka otrzymuje identyfikator sesji, zwykle zapisywany w ciasteczku o nazwie <code>PHPSESSID</code>. Przy kolejnym żądaniu przeglądarka odsyła identyfikator, a PHP odnajduje odpowiadające mu dane.</p>
+  <div class="code-title"><span>sesja.php</span><span>PHP · uruchomienie i zapis danych sesji</span></div>
+  <pre><code>&lt;?php
+session_start(); // przed jakimkolwiek HTML lub echo
+
+$_SESSION['imie'] = "Anna";
+$_SESSION['licznik'] = ($_SESSION['licznik'] ?? 0) + 1;
+
+echo "Witaj, " . htmlspecialchars($_SESSION['imie'], ENT_QUOTES, 'UTF-8');
+echo "! Odwiedziłeś stronę ";
+echo (int)$_SESSION['licznik'];
+echo " razy.";
+?&gt;</code></pre>
+  <div class="warning"><strong>session_start() przed wyjściem</strong><code>session_start()</code> powinno zostać wywołane przed wysłaniem jakiejkolwiek treści do przeglądarki. W przeciwnym razie PHP może nie móc wysłać nagłówków związanych z sesją.</div>
+  <h3>3. Usuwanie danych i kończenie sesji</h3>
+  <div class="code-title"><span>koniec_sesji.php</span><span>PHP · różne poziomy usuwania</span></div>
+  <pre><code>&lt;?php
+session_start();
+
+unset($_SESSION['imie']); // usuń jedną wartość
+session_unset();           // usuń wszystkie zmienne sesji
+session_destroy();         // zakończ sesję po stronie serwera
+?&gt;</code></pre>
+  <p><code>unset()</code> usuwa wskazany element. <code>session_unset()</code> usuwa zmienne sesji, a <code>session_destroy()</code> niszczy dane bieżącej sesji po stronie serwera. Samo <code>session_destroy()</code> nie usuwa automatycznie ciasteczka identyfikatora z przeglądarki.</p>
+  <h3>4. Ciasteczka — <code>setcookie()</code> i <code>$_COOKIE</code></h3>
+  <div class="definition"><strong>Cookie (ciasteczko)</strong>Niewielka porcja danych zapisywana przez przeglądarkę dla określonej witryny. Jest automatycznie dołączana do kolejnych żądań, zgodnie z ustawionym zakresem i terminem ważności.</div>
+  <div class="code-title"><span>cookie.php</span><span>PHP · ustawianie, odczyt i usuwanie</span></div>
+  <pre><code>&lt;?php
+// Ustawienie ciasteczka na 30 dni — przed wysłaniem treści strony.
+setcookie("jezyk", "pl", time() + 3600 * 24 * 30, "/");
+
+// Wartość jest dostępna z żądania, które zawiera cookie.
+$jezyk = $_COOKIE['jezyk'] ?? 'nieznany';
+echo "Wybrany język: " . htmlspecialchars($jezyk, ENT_QUOTES, 'UTF-8');
+
+// Usunięcie: ustawienie daty wygaśnięcia w przeszłości.
+setcookie("jezyk", "", time() - 3600, "/");
+?&gt;</code></pre>
+  <p>Nowo ustawione ciasteczko jest zwykle dostępne w <code>$_COOKIE</code> dopiero przy kolejnym żądaniu, ponieważ przeglądarka musi najpierw otrzymać nagłówek <code>Set-Cookie</code>, zapisać cookie, a potem odesłać je z powrotem.</p>
+  <div class="table-wrap"><table><thead><tr><th>Cecha</th><th>Sesja</th><th>Ciasteczko</th></tr></thead><tbody>
+    <tr><td>Miejsce przechowywania</td><td>Dane sesji na serwerze.</td><td>Dane w przeglądarce.</td></tr>
+    <tr><td>Co widzi użytkownik?</td><td>Zwykle tylko identyfikator sesji.</td><td>Wartość cookie może być odczytana i zmodyfikowana przez użytkownika.</td></tr>
+    <tr><td>Czas życia</td><td>Zależny od konfiguracji sesji i jej zakończenia.</td><td>Ustalany przez datę wygaśnięcia; może być trwałe.</td></tr>
+    <tr><td>Typowe zastosowanie</td><td>Stan logowania, koszyk zakupowy.</td><td>Preferencje, np. język lub motyw.</td></tr>
+  </tbody></table></div>
+  <div class="note"><strong>Uzupełnienie — atrybuty bezpieczeństwa ciasteczek</strong>W rzeczywistych aplikacjach ciasteczka sesyjne powinny mieć odpowiednie ustawienia, m.in. <code>HttpOnly</code>, <code>Secure</code> (gdy używany jest HTTPS) i <code>SameSite</code>. Ograniczają one część ryzyk związanych z dostępem skryptów do cookie i wysyłaniem go w żądaniach między witrynami.</div>
+  <h3>5. Prosty mechanizm logowania z sesją</h3>
+  <p>Poniższy kod ilustruje przepływ: sprawdzenie danych logowania, zapis informacji w sesji i przekierowanie do panelu. Hasło zapisane wprost w kodzie jest wyłącznie demonstracją — nie jest to właściwy sposób logowania w prawdziwej aplikacji.</p>
+  <div class="code-title"><span>logowanie.php</span><span>PHP · demonstracyjna weryfikacja</span></div>
+  <pre><code>&lt;?php
+session_start();
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $login = $_POST['login'] ?? '';
+    $haslo = $_POST['haslo'] ?? '';
+
+    // WYŁĄCZNIE przykład dydaktyczny:
+    if ($login === "uczen" &amp;&amp; $haslo === "tajne123") {
+        session_regenerate_id(true);
+        $_SESSION['zalogowany'] = true;
+        $_SESSION['login'] = $login;
+
+        header("Location: panel.php");
+        exit;
+    } else {
+        $blad = "Nieprawidłowy login lub hasło";
+    }
+}
+?&gt;</code></pre>
+  <div class="code-title"><span>panel.php</span><span>PHP · strona chroniona</span></div>
+  <pre><code>&lt;?php
+session_start();
+
+if (empty($_SESSION['zalogowany'])) {
+    header("Location: logowanie.php");
+    exit;
+}
+
+$login = $_SESSION['login'] ?? 'użytkowniku';
+echo "Witaj, " . htmlspecialchars($login, ENT_QUOTES, 'UTF-8');
+echo "! &lt;a href='wyloguj.php'&gt;Wyloguj&lt;/a&gt;";
+?&gt;</code></pre>
+  <div class="code-title"><span>wyloguj.php</span><span>PHP · zakończenie logowania</span></div>
+  <pre><code>&lt;?php
+session_start();
+$_SESSION = [];
+session_destroy();
+
+header("Location: logowanie.php");
+exit;
+?&gt;</code></pre>
+  <div class="warning"><strong>Hasła w prawdziwej aplikacji</strong>Nie przechowuj haseł w postaci jawnej. Do tworzenia skrótów haseł służą m.in. <code>password_hash()</code>, a do ich weryfikacji <code>password_verify()</code>. Po udanym logowaniu warto odświeżyć identyfikator sesji, tak jak w przykładzie przez <code>session_regenerate_id(true)</code>.</div>
+  <div class="remember"><strong>Zapamiętaj</strong>Sesja przechowuje dane po stronie serwera, a cookie po stronie przeglądarki. <code>session_start()</code> i <code>setcookie()</code> muszą być wywołane przed wysłaniem treści strony. Przekierowanie przez <code>header()</code> powinno być zakończone <code>exit</code>.</div>
+</section>
+
+<section class="chapter" id="blok-13">
+  <div class="chapter-head"><div class="chapter-no">13</div><div><h2>Podstawy JavaScript — zmienne, typy danych i operatory</h2><p>6 godzin · Kod wykonywany po stronie przeglądarki</p></div></div>
+  <h3>1. Rola JavaScript i porównanie z PHP</h3>
+  <p>JavaScript jest językiem programowania szeroko wykorzystywanym w przeglądarkach. Pozwala reagować na działania użytkownika, zmieniać elementy strony, sprawdzać dane formularza i wysyłać żądania do serwera.</p>
+  <div class="table-wrap"><table><thead><tr><th>Cecha</th><th>PHP</th><th>JavaScript</th></tr></thead><tbody>
+    <tr><td>Miejsce wykonania w typowej aplikacji</td><td>Serwer</td><td>Przeglądarka</td></tr>
+    <tr><td>Kiedy kod działa?</td><td>Przed odesłaniem odpowiedzi</td><td>Po otrzymaniu dokumentu przez przeglądarkę</td></tr>
+    <tr><td>Typowe możliwości</td><td>Baza danych, pliki serwera, sesje</td><td>DOM, zdarzenia, interakcje, komunikacja HTTP</td></tr>
+    <tr><td>Widoczność</td><td>Kod PHP nie jest wysyłany jako kod źródłowy do przeglądarki</td><td>Kod JavaScript dostarczony do przeglądarki można obejrzeć</td></tr>
+  </tbody></table></div>
+  <h3>2. Umieszczanie kodu JavaScript w HTML</h3>
+  <p>Kod można zapisać wewnątrz elementu <code>&lt;script&gt;</code> albo w osobnym pliku. Zewnętrzny plik zwykle ułatwia utrzymanie porządku i ponowne wykorzystanie kodu.</p>
+  <div class="code-title"><span>strona.html</span><span>HTML · skrypt wewnętrzny i zewnętrzny</span></div>
+  <pre><code>&lt;!doctype html&gt;
+&lt;html lang="pl"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Przykład JavaScript&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Moja strona&lt;/h1&gt;
+
+    &lt;script&gt;
+        console.log("Witaj ze skryptu wewnętrznego");
+    &lt;/script&gt;
+
+    &lt;script src="script.js" defer&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+  <p>Plik <code>script.js</code> zawiera sam kod JavaScript, bez znacznika <code>&lt;script&gt;</code>. Atrybut <code>defer</code> powoduje wykonanie zewnętrznego skryptu po sparsowaniu dokumentu HTML.</p>
+  <div class="code-title"><span>script.js</span><span>JavaScript · plik zewnętrzny</span></div>
+  <pre><code>console.log("Witaj z pliku zewnętrznego");</code></pre>
+  <h3>3. Konsola deweloperska</h3>
+  <p>Konsolę przeglądarki można otworzyć zwykle klawiszem <strong>F12</strong> i przejść do zakładki <strong>Console</strong>. Do wypisywania wartości podczas testowania służy <code>console.log()</code>.</p>
+  <div class="code-title"><span>konsola.js</span><span>JavaScript · diagnostyka</span></div>
+  <pre><code>let wynik = 2 + 3;
+console.log("Wynik:", wynik);
+console.log(typeof wynik);</code></pre>
+  <p><code>console.log()</code> jest wygodny, ponieważ nie zatrzymuje działania strony i nie wymaga zamykania okna dialogowego, w przeciwieństwie do <code>alert()</code>.</p>
+  <h3>4. Zmienne: let, const i var</h3>
+  <div class="table-wrap"><table><thead><tr><th>Słowo</th><th>Czy można przypisać nową wartość?</th><th>Zasięg</th><th>Wskazówka</th></tr></thead><tbody>
+    <tr><td><code>let</code></td><td>Tak</td><td>Blokowy</td><td>Stosuj, gdy zmienna ma się zmieniać.</td></tr>
+    <tr><td><code>const</code></td><td>Nie</td><td>Blokowy</td><td>Domyślny wybór, gdy nie planujesz ponownego przypisania.</td></tr>
+    <tr><td><code>var</code></td><td>Tak</td><td>Funkcyjny</td><td>Starszy sposób deklaracji; w nowym kodzie zwykle unikamy.</td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>zmienne.js</span><span>JavaScript · let, const i var</span></div>
+  <pre><code>let imie = "Anna";
+const PI = 3.14159;
+var wiek = 17; // starsza forma deklaracji
+
+imie = "Kasia"; // poprawna zmiana let
+wiek = 18;       // poprawna zmiana var
+// PI = 3.14;    // błąd — nie można ponownie przypisać const</code></pre>
+  <div class="note"><strong>Ważne rozróżnienie</strong><code>const</code> blokuje ponowne przypisanie zmiennej, ale nie oznacza, że zawartość obiektu lub tablicy jest niezmienna. Można np. dodać element do tablicy zadeklarowanej przez <code>const</code>.</div>
+  <h3>5. Typy danych w JavaScript</h3>
+  <p>JavaScript jest dynamicznie typowany. Wartość zmiennej może w trakcie działania programu należeć do innego typu niż wcześniej.</p>
+  <div class="table-wrap"><table><thead><tr><th>Typ</th><th>Przykład</th><th>Opis</th></tr></thead><tbody>
+    <tr><td><code>number</code></td><td><code>10</code>, <code>3.14</code></td><td>Liczby całkowite i zmiennoprzecinkowe.</td></tr>
+    <tr><td><code>string</code></td><td><code>"Informatyka"</code></td><td>Tekst.</td></tr>
+    <tr><td><code>boolean</code></td><td><code>true</code>, <code>false</code></td><td>Wartość logiczna.</td></tr>
+    <tr><td><code>object</code></td><td><code>{ imie: "Anna" }</code></td><td>Obiekt z właściwościami; tablice również są obiektami.</td></tr>
+    <tr><td><code>null</code></td><td><code>null</code></td><td>Celowy brak wartości.</td></tr>
+    <tr><td><code>undefined</code></td><td><code>let x;</code></td><td>Brak przypisanej wartości.</td></tr>
+  </tbody></table></div>
+  <div class="code-title"><span>typy.js</span><span>JavaScript · przykładowe typy</span></div>
+  <pre><code>let liczba = 10;             // number
+let tekst = "Informatyka";   // string
+let flaga = true;            // boolean
+let tablica = [1, 2, 3];     // object (Array)
+let osoba = { imie: "Anna" };// object
+let nic = null;              // null
+let niezdefiniowane;         // undefined
+
+console.log(typeof liczba);  // "number"
+console.log(typeof tekst);   // "string"
+console.log(typeof tablica); // "object"
+console.log(typeof null);    // "object" — historyczna cecha JS</code></pre>
+  <div class="warning"><strong>Pułapka typeof</strong><code>typeof null</code> zwraca <code>"object"</code> — jest to historyczna cecha języka. Tablice również zwracają <code>"object"</code>; do ich rozpoznawania używa się m.in. <code>Array.isArray(tablica)</code>.</div>
+  <h3>6. Operatory JavaScript</h3>
+  <p>Wiele operatorów przypomina te znane z PHP: arytmetyczne, przypisania, porównania i logiczne. Różni się natomiast m.in. sposób łączenia tekstów i szczegóły konwersji typów.</p>
+  <div class="code-title"><span>operatory.js</span><span>JavaScript · obliczenia i porównania</span></div>
+  <pre><code>let a = 10;
+let b = 3;
+
+console.log(a + b);   // 13
+console.log(a % b);   // 1 — reszta z dzielenia
+console.log(a ** b);  // 1000 — potęgowanie
+console.log(a + " i " + b); // 10 i 3 — konkatenacja
+
+console.log(5 == "5");   // true — konwersja typu
+console.log(5 === "5");  // false — różne typy
+console.log(5 !== "5");  // true
+
+console.log(true &amp;&amp; false); // false
+console.log(true || false);  // true
+console.log(!true);          // false</code></pre>
+  <div class="remember"><strong>Dobra praktyka</strong>W JavaScript stosuj <code>===</code> i <code>!==</code> zamiast <code>==</code> i <code>!=</code>, chyba że świadomie potrzebujesz porównania z konwersją typów.</div>
+  <h3>7. Konwersja typów</h3>
+  <p>Konwersja może być jawna, gdy wywołujemy funkcję konwertującą, albo niejawna, gdy JavaScript wykonuje ją automatycznie podczas działania operatora.</p>
+  <div class="code-title"><span>konwersje.js</span><span>JavaScript · przykłady konwersji</span></div>
+  <pre><code>let tekstLiczby = "42";
+
+console.log(Number(tekstLiczby) + 8); // 50
+console.log(parseInt("42px", 10));    // 42
+console.log(parseFloat("3.14zl"));    // 3.14
+console.log(String(123));              // "123"
+
+console.log(Boolean(0));              // false
+console.log(Boolean(""));             // false
+console.log(Boolean("tekst"));        // true</code></pre>
+  <p><code>Number()</code> próbuje skonwertować całą wartość na liczbę. <code>parseInt()</code> odczytuje liczbę całkowitą z początku tekstu, a <code>parseFloat()</code> — liczbę zmiennoprzecinkową. W przypadku <code>parseInt()</code> warto jawnie podawać podstawę systemu, np. <code>10</code>.</p>
+  <h3>8. Template literals — szablony literałów</h3>
+  <p>Szablony literałów zapisujemy w odwrotnych apostrofach (backtick). Pozwalają wstawiać wartości wyrażeń za pomocą składni <code>${...}</code>.</p>
+  <div class="code-title"><span>template_literals.js</span><span>JavaScript · interpolacja tekstu</span></div>
+  <pre><code>let imie = "Anna";
+let wiek = 17;
+
+console.log(`Mam na imię ${imie} i mam ${wiek} lat.`);</code></pre>
+  <div class="remember"><strong>Zapamiętaj</strong><code>let</code> i <code>const</code> mają zasięg blokowy. <code>===</code> porównuje bez niejawnej konwersji typu. <code>typeof</code> sprawdza typ w czasie działania. Szablony literałów używają znaków backtick i zapisu <code>${wyrazenie}</code>.</div>
+</section>
+
+<section class="chapter" id="blok-14">
+  <div class="chapter-head"><div class="chapter-no">14</div><div><h2>Instrukcje warunkowe i pętle w JavaScript</h2><p>3 godziny · Sterowanie przepływem programu</p></div></div>
+  <h3>1. Warunki <code>if / else if / else</code></h3>
+  <p>Instrukcje warunkowe działają podobnie jak w PHP. Pozwalają wykonywać kod zależnie od wartości wyrażenia logicznego.</p>
+  <div class="code-title"><span>warunki.js</span><span>JavaScript · ocena i operator warunkowy</span></div>
+  <pre><code>let ocena = 4;
+
+if (ocena &gt;= 5) {
+    console.log("Bardzo dobry");
+} else if (ocena &gt;= 4) {
+    console.log("Dobry");
+} else {
+    console.log("Popraw się");
+}
+
+// Operator trójargumentowy (ternary)
+let status = (ocena &gt;= 3) ? "zaliczone" : "niezaliczone";</code></pre>
+  <p>Operator trójargumentowy ma trzy części: warunek, wartość dla prawdy i wartość dla fałszu. Jest przydatny do prostych wyborów, ale złożone warunki lepiej zapisywać jako instrukcję <code>if</code>.</p>
+  <h3>2. Instrukcja <code>switch</code></h3>
+  <div class="code-title"><span>switch.js</span><span>JavaScript · wybór dnia tygodnia</span></div>
+  <pre><code>let dzien = 3;
+
+switch (dzien) {
+    case 1:
+        console.log("Poniedziałek");
+        break;
+    case 2:
+        console.log("Wtorek");
+        break;
+    case 3:
+        console.log("Środa");
+        break;
+    default:
+        console.log("Inny dzień");
+}</code></pre>
+  <p>Tak jak w PHP, <code>break</code> zapobiega przejściu do kolejnego przypadku.</p>
+  <h3>3. Pętle <code>for</code>, <code>while</code> i <code>do...while</code></h3>
+  <div class="code-title"><span>petle.js</span><span>JavaScript · trzy podstawowe pętle</span></div>
+  <pre><code>// for — licznik
+for (let i = 1; i &lt;= 5; i++) {
+    console.log("Iteracja " + i);
+}
+
+// while — warunek przed wykonaniem
+let i = 1;
+while (i &lt;= 5) {
+    console.log(i);
+    i++;
+}
+
+// do...while — wykonanie przynajmniej raz
+let j = 1;
+do {
+    console.log(j);
+    j++;
+} while (j &lt;= 5);</code></pre>
+  <h3>4. <code>for...of</code> — wartości tablicy</h3>
+  <p><code>for...of</code> przechodzi po wartościach elementów iterowalnych struktur, np. tablicy.</p>
+  <div class="code-title"><span>for_of.js</span><span>JavaScript · wartości tablicy</span></div>
+  <pre><code>const owoce = ["jabłko", "gruszka", "banan"];
+
+for (const owoc of owoce) {
+    console.log(owoc);
+}</code></pre>
+  <h3>5. <code>for...in</code> — klucze obiektu</h3>
+  <p><code>for...in</code> przechodzi po wyliczalnych nazwach właściwości obiektu. Wartości odczytujemy przez nawiasy kwadratowe.</p>
+  <div class="code-title"><span>for_in.js</span><span>JavaScript · klucze i wartości obiektu</span></div>
+  <pre><code>const osoba = { imie: "Anna", wiek: 17 };
+
+for (const klucz in osoba) {
+    console.log(klucz + ": " + osoba[klucz]);
+}</code></pre>
+  <div class="note"><strong>Nie pomyl for...of i for...in</strong><code>for...of</code> służy zwykle do przechodzenia po wartościach tablicy. <code>for...in</code> zwraca klucze/nazwy właściwości obiektu. Przy tablicach do pobierania wartości wygodniejszy i bardziej czytelny jest <code>for...of</code>.</div>
+  <h3>6. <code>break</code> i <code>continue</code></h3>
+  <div class="code-title"><span>break_continue.js</span><span>JavaScript · sterowanie iteracją</span></div>
+  <pre><code>for (let i = 1; i &lt;= 10; i++) {
+    if (i === 5) {
+        break;       // kończy pętlę
+    }
+    if (i % 2 === 0) {
+        continue;    // pomija tę iterację
+    }
+    console.log(i);
+}
+// Wynik: 1, 3</code></pre>
+  <div class="remember"><strong>Zapamiętaj</strong>W JS działają te same podstawowe konstrukcje sterujące co w PHP. Dodatkowo szczególnie ważne są <code>for...of</code> dla wartości oraz <code>for...in</code> dla kluczy właściwości obiektu.</div>
+</section>
+
+<section class="chapter" id="blok-15">
+  <div class="chapter-head"><div class="chapter-no">15</div><div><h2>Tworzenie funkcji w JavaScript</h2><p>3 godziny · Deklaracje, funkcje strzałkowe, zasięg i callbacki</p></div></div>
+  <h3>1. Trzy sposoby definiowania funkcji</h3>
+  <p>Funkcja to wydzielony fragment kodu, który może przyjmować argumenty i zwracać wynik. W JavaScript istnieje kilka popularnych sposobów zapisu funkcji.</p>
+  <div class="code-title"><span>funkcje.js</span><span>JavaScript · declaration, expression, arrow</span></div>
+  <pre><code>// 1. Deklaracja funkcji (function declaration)
+function przywitaj(imie) {
+    return "Witaj, " + imie + "!";
+}
+
+// 2. Wyrażenie funkcyjne (function expression)
+const przywitaj2 = function(imie) {
+    return "Witaj, " + imie + "!";
+};
+
+// 3. Funkcja strzałkowa (arrow function)
+const przywitaj3 = (imie) =&gt; {
+    return "Witaj, " + imie + "!";
+};
+
+// Skrócona forma: jeden parametr, jedno wyrażenie
+const przywitaj4 = imie =&gt; `Witaj, ${imie}!`;
+
+console.log(przywitaj("Anna"));</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Forma</th><th>Charakterystyka</th></tr></thead><tbody>
+    <tr><td>Deklaracja funkcji</td><td>Można ją wywołać przed miejscem deklaracji w tym samym zakresie dzięki mechanizmowi hoistingu deklaracji funkcji.</td></tr>
+    <tr><td>Wyrażenie funkcyjne</td><td>Funkcja przypisana do zmiennej; sposób dostępności zależy od deklaracji tej zmiennej.</td></tr>
+    <tr><td>Funkcja strzałkowa</td><td>Krótsza składnia; nie tworzy własnego <code>this</code>, co ma znaczenie przy pracy z obiektami i zdarzeniami.</td></tr>
+  </tbody></table></div>
+  <h3>2. Parametry domyślne i wiele argumentów</h3>
+  <p>Parametr domyślny jest używany, jeżeli argument nie został przekazany lub ma wartość <code>undefined</code>.</p>
+  <div class="code-title"><span>parametry.js</span><span>JavaScript · wartość domyślna</span></div>
+  <pre><code>function poleProstokata(a, b = 1) {
+    return a * b;
+}
+
+console.log(poleProstokata(5));    // 5 — b = 1
+console.log(poleProstokata(5, 4)); // 20</code></pre>
+  <h3>3. Zasięg zmiennych (scope)</h3>
+  <div class="definition"><strong>Zasięg (scope)</strong>Określa, w jakiej części programu dana zmienna jest dostępna. Zmienna zadeklarowana lokalnie wewnątrz funkcji nie jest automatycznie dostępna poza tą funkcją.</div>
+  <div class="code-title"><span>scope.js</span><span>JavaScript · zmienna globalna i lokalna</span></div>
+  <pre><code>let x = 10; // zmienna w zewnętrznym zakresie
+
+function test() {
+    let x = 20; // lokalna zmienna o tej samej nazwie
+    console.log(x); // 20
+}
+
+test();
+console.log(x); // 10 — wartość z zewnętrznego zakresu</code></pre>
+  <p><code>let</code> i <code>const</code> mają zasięg blokowy — zmienna jest dostępna w bloku <code>{ }</code>, w którym została zadeklarowana, oraz w odpowiednich zakresach zagnieżdżonych.</p>
+  <div class="code-title"><span>scope_blokowy.js</span><span>JavaScript · zasięg bloku</span></div>
+  <pre><code>if (true) {
+    const komunikat = "Wewnątrz bloku";
+    console.log(komunikat); // działa
+}
+
+// console.log(komunikat); // błąd — poza zakresem bloku</code></pre>
+  <h3>4. Funkcja zwracająca obiekt — statystyki</h3>
+  <p>Funkcja może zwrócić obiekt z kilkoma obliczonymi wartościami. W przykładzie wykorzystywane są metody tablicy <code>reduce()</code>, <code>Math.max()</code> i <code>Math.min()</code>.</p>
+  <div class="code-title"><span>statystyki.js</span><span>JavaScript · obliczanie statystyk</span></div>
+  <pre><code>function statystyki(liczby) {
+    if (liczby.length === 0) {
+        return null;
+    }
+
+    const suma = liczby.reduce((a, b) =&gt; a + b, 0);
+
+    return {
+        suma: suma,
+        srednia: suma / liczby.length,
+        max: Math.max(...liczby),
+        min: Math.min(...liczby)
+    };
+}
+
+console.log(statystyki([3, 7, 2, 9]));</code></pre>
+  <p><code>reduce()</code> przechodzi przez tablicę i sprowadza jej elementy do jednej wartości. W tym przykładzie oblicza sumę. Operator <code>...</code> (spread) przekazuje elementy tablicy jako osobne argumenty do <code>Math.max()</code> i <code>Math.min()</code>.</p>
+  <div class="note"><strong>Uwaga o pustej tablicy</strong>Bez sprawdzenia długości dzielenie przez zero mogłoby dać <code>NaN</code>, a funkcje <code>Math.max(...[])</code> i <code>Math.min(...[])</code> zwracają wartości skrajne odpowiednio <code>-Infinity</code> i <code>Infinity</code>. Dlatego funkcja powinna określać, co robić przy braku danych.</div>
+  <h3>5. Funkcja jako argument — callback</h3>
+  <div class="definition"><strong>Callback (funkcja zwrotna)</strong>Funkcja przekazana do innej funkcji jako argument, aby mogła zostać wywołana w odpowiednim momencie.</div>
+  <div class="code-title"><span>callback.js</span><span>JavaScript · przekazanie funkcji jako argumentu</span></div>
+  <pre><code>function wykonajDwaRazy(fn) {
+    fn();
+    fn();
+}
+
+wykonajDwaRazy(() =&gt; console.log("Cześć!"));
+// Funkcja callback zostanie wywołana dwa razy.</code></pre>
+  <p>Callbacki są często wykorzystywane przy obsłudze zdarzeń, np. kliknięcia przycisku, oraz przy metodach tablicowych, takich jak <code>map()</code>, <code>filter()</code> czy <code>forEach()</code>.</p>
+  <div class="code-title"><span>callback_tablica.js</span><span>JavaScript · callback w forEach</span></div>
+  <pre><code>const imiona = ["Anna", "Piotr", "Kasia"];
+
+imiona.forEach(function(imie) {
+    console.log(imie);
+});
+
+// Ten sam mechanizm z funkcją strzałkową:
+imiona.forEach(imie =&gt; console.log(imie));</code></pre>
+  <div class="remember"><strong>Zapamiętaj</strong>Funkcja może być wartością i argumentem innej funkcji. Callback jest wywoływany przez funkcję, której został przekazany. Deklaracje funkcji, wyrażenia funkcyjne i funkcje strzałkowe mają różne właściwości — szczególnie w zakresie hoistingu i <code>this</code>.</div>
+</section>
+
+<section class="chapter" id="blok-16">
+  <div class="chapter-head"><div class="chapter-no">16</div><div><h2>Obiekty i klasy w JavaScript</h2><p>3 godziny · Właściwości, metody, this, konstruktory, klasy i JSON</p></div></div>
+  <h3>1. Czym jest obiekt?</h3>
+  <div class="definition"><strong>Obiekt</strong>Struktura, która grupuje powiązane dane (właściwości) i zachowania (metody). Właściwość opisuje obiekt, a metoda jest funkcją związaną z obiektem.</div>
+  <h3>2. Tworzenie obiektu — notacja literałowa</h3>
+  <p>Najczęstszym sposobem tworzenia prostego obiektu jest zapis literałowy w nawiasach klamrowych. Właściwości zapisujemy jako pary <code>klucz: wartość</code>.</p>
+  <div class="code-title"><span>obiekt.js</span><span>JavaScript · obiekt ucznia</span></div>
+  <pre><code>const uczen = {
+    imie: "Anna",
+    wiek: 17,
+    klasa: "3TI",
+    oceny: [5, 4, 5],
+    przedstawSie: function() {
+        return `Jestem ${this.imie}, mam ${this.wiek} lat.`;
+    }
+};
+
+console.log(uczen.imie);          // dostęp przez kropkę
+console.log(uczen["klasa"]);      // dostęp przez nawiasy
+console.log(uczen.przedstawSie()); // wywołanie metody</code></pre>
+  <p><code>this</code> w metodzie zapisanej w ten sposób odnosi się do obiektu, na którym wywołano metodę, czyli w przykładzie do <code>uczen</code>.</p>
+  <h3>3. Dostęp do właściwości i modyfikacja obiektu</h3>
+  <p>Właściwość można odczytać przez kropkę albo nawiasy kwadratowe. Nawiasy są przydatne, gdy nazwa klucza znajduje się w zmiennej.</p>
+  <div class="code-title"><span>modyfikacja_obiektu.js</span><span>JavaScript · dodawanie i usuwanie</span></div>
+  <pre><code>uczen.email = "anna@szkola.pl"; // dodanie właściwości
+uczen.wiek = 18;                 // zmiana wartości
+
+delete uczen.oceny;              // usunięcie właściwości
+
+const nazwaPola = "imie";
+console.log(uczen[nazwaPola]);   // Anna</code></pre>
+  <div class="warning"><strong>const a zawartość obiektu</strong>Obiekt zadeklarowany przez <code>const</code> nie może zostać zastąpiony innym obiektem przez ponowne przypisanie zmiennej. Można jednak zmieniać jego właściwości, o ile nie został dodatkowo zablokowany.</div>
+  <h3>4. Tworzenie obiektu przez <code>new Object()</code></h3>
+  <p>Obiekt można utworzyć również konstruktorem <code>Object</code>, a następnie dodawać mu właściwości. Zapis literałowy jest jednak zwykle krótszy i częściej spotykany.</p>
+  <div class="code-title"><span>new_object.js</span><span>JavaScript · konstruktor Object</span></div>
+  <pre><code>const osoba = new Object();
+osoba.imie = "Piotr";
+osoba.wiek = 18;
+
+console.log(osoba.imie);</code></pre>
+  <h3>5. Funkcja konstruująca — starszy sposób</h3>
+  <p>Funkcja konstruująca jest wywoływana z operatorem <code>new</code>. Wewnątrz funkcji <code>this</code> wskazuje nowo tworzony obiekt.</p>
+  <div class="code-title"><span>konstruktor.js</span><span>JavaScript · funkcja konstruująca</span></div>
+  <pre><code>function Uczen(imie, wiek) {
+    this.imie = imie;
+    this.wiek = wiek;
+}
+
+const u1 = new Uczen("Piotr", 18);
+console.log(u1.imie); // Piotr</code></pre>
+  <h3>6. Klasy — nowoczesny zapis</h3>
+  <p>Klasa opisuje wspólny kształt obiektów. Konstruktor <code>constructor()</code> wykonuje się podczas tworzenia instancji przez <code>new</code>. Metody zapisane w klasie definiują zachowanie jej obiektów.</p>
+  <div class="code-title"><span>klasa_uczen.js</span><span>JavaScript · klasa i metody</span></div>
+  <pre><code>class Uczen {
+    constructor(imie, wiek) {
+        this.imie = imie;
+        this.wiek = wiek;
+        this.oceny = [];
+    }
+
+    dodajOcene(ocena) {
+        this.oceny.push(ocena);
+    }
+
+    sredniaOcen() {
+        if (this.oceny.length === 0) {
+            return 0;
+        }
+        return this.oceny.reduce((a, b) =&gt; a + b, 0) / this.oceny.length;
+    }
+}
+
+const uczen = new Uczen("Kasia", 17);
+uczen.dodajOcene(5);
+uczen.dodajOcene(4);
+
+console.log(uczen.sredniaOcen()); // 4.5</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Pojęcie</th><th>Znaczenie</th></tr></thead><tbody>
+    <tr><td>Klasa</td><td>Opis właściwości i metod obiektów danego rodzaju.</td></tr>
+    <tr><td>Instancja</td><td>Konkretny obiekt utworzony na podstawie klasy.</td></tr>
+    <tr><td><code>constructor()</code></td><td>Metoda inicjalizująca nową instancję.</td></tr>
+    <tr><td><code>new</code></td><td>Tworzy nową instancję klasy lub wywołuje funkcję konstruującą.</td></tr>
+    <tr><td><code>this</code></td><td>Odwołanie do obiektu, z którym związane jest bieżące wywołanie.</td></tr>
+  </tbody></table></div>
+  <h3>7. Tablica obiektów</h3>
+  <p>W aplikacjach często przechowujemy wiele obiektów w jednej tablicy. Możemy wtedy iterować po elementach i korzystać z ich właściwości.</p>
+  <div class="code-title"><span>tablica_obiektow.js</span><span>JavaScript · lista uczniów</span></div>
+  <pre><code>const uczniowie = [
+    { imie: "Anna", ocena: 5 },
+    { imie: "Piotr", ocena: 3 },
+];
+
+uczniowie.forEach(u =&gt; {
+    console.log(`${u.imie}: ${u.ocena}`);
+});</code></pre>
+  <h3>8. JSON w JavaScript — <code>JSON.stringify()</code> i <code>JSON.parse()</code></h3>
+  <p>JavaScript udostępnia obiekt <code>JSON</code> z metodami do konwersji danych. Jest to odpowiednik zagadnień poznanych wcześniej w PHP.</p>
+  <div class="code-title"><span>json.js</span><span>JavaScript · obiekt na tekst i z powrotem</span></div>
+  <pre><code>const uczen = {
+    imie: "Anna",
+    wiek: 17,
+    klasa: "3TI"
+};
+
+const json = JSON.stringify(uczen); // obiekt → tekst JSON
+console.log(json);
+
+const obiekt = JSON.parse(json);    // tekst JSON → obiekt
+console.log(obiekt.imie);           // Anna</code></pre>
+  <div class="table-wrap"><table><thead><tr><th>Metoda JavaScript</th><th>Kierunek</th><th>Odpowiednik po stronie PHP</th></tr></thead><tbody>
+    <tr><td><code>JSON.stringify()</code></td><td>Obiekt JS → tekst JSON</td><td><code>json_encode()</code> — dane PHP → JSON</td></tr>
+    <tr><td><code>JSON.parse()</code></td><td>Tekst JSON → obiekt JS</td><td><code>json_decode()</code> — JSON → dane PHP</td></tr>
+  </tbody></table></div>
+  <div class="remember"><strong>Zapamiętaj</strong>Obiekt grupuje dane i metody. Do właściwości odwołujemy się przez kropkę lub nawiasy. <code>this</code> odnosi się do obiektu w kontekście wywołania. Klasa jest opisem, a instancja — konkretnym obiektem. JSON pozwala przekazywać dane pomiędzy PHP i JavaScript.</div>
+</section>
+
+<section class="final-card" id="powtorka">
+  <h2>Powtórka przed sprawdzianem lub egzaminem</h2>
+  <p class="lead">Ta część zbiera najważniejsze pojęcia i składnie z całego przekazanego materiału.</p>
+  <h3>1. Najważniejsze zagadnienia — checklista</h3>
+  <ul class="checklist">
+    <li>Wiem, czym różni się kod wykonywany po stronie serwera od kodu wykonywanego w przeglądarce.</li>
+    <li>Potrafię uruchomić projekt PHP przez Apache w XAMPP i wiem, gdzie znajduje się katalog <code>htdocs</code>.</li>
+    <li>Rozpoznaję zmienne, stałe, typy danych i operatory PHP.</li>
+    <li>Odczytuję parametry z <code>$_GET</code> i dane formularza z <code>$_POST</code>.</li>
+    <li>Potrafię sprawdzić dane wejściowe, zwalidować je i bezpiecznie wyświetlić przez <code>htmlspecialchars()</code>.</li>
+    <li>Umiem stosować instrukcje warunkowe, pętle i tablice.</li>
+    <li>Potrafię zdefiniować funkcję, zwrócić wynik i dołączyć inny plik PHP.</li>
+    <li>Rozumiem różnicę pomiędzy <code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code> i <code>DELETE</code>.</li>
+    <li>Stosuję prepared statements, aby nie łączyć danych użytkownika bezpośrednio z SQL.</li>
+    <li>Umiem zapisać i odczytać plik oraz wyjaśnić, jak działa upload.</li>
+    <li>Rozumiem serializację JSON i różnicę pomiędzy JSON a <code>serialize()</code>.</li>
+    <li>Wyjaśniam, gdzie przechowywane są dane sesji i ciasteczka.</li>
+    <li>W JavaScript znam <code>let</code>, <code>const</code>, typy, operatory, warunki, pętle i funkcje.</li>
+    <li>Potrafię utworzyć obiekt, klasę, instancję i wyjaśnić działanie <code>this</code>.</li>
+  </ul>
+  <h3>2. Składnie, które warto znać na pamięć</h3>
+  <div class="code-title"><span>PHP — minimum składni</span><span>ściąga</span></div>
+  <pre><code>&lt;?php
+// Zmienna i stała
+$imie = "Anna";
+const WERSJA = "1.0";
+
+// Warunek
+if ($wiek &gt;= 18) { echo "Pełnoletni"; }
+
+// Pętla
+for ($i = 0; $i &lt; 5; $i++) { echo $i; }
+
+// Tablica i foreach
+$owoce = ["jabłko", "gruszka"];
+foreach ($owoce as $owoc) { echo $owoc; }
+
+// Funkcja
+function dodaj($a, $b = 0) { return $a + $b; }
+
+// Bezpieczny odczyt i output
+$imie = $_GET['imie'] ?? '';
+echo htmlspecialchars($imie, ENT_QUOTES, 'UTF-8');
+?&gt;</code></pre>
+  <div class="code-title"><span>SQL + mysqli — minimum składni</span><span>ściąga</span></div>
+  <pre><code>// Odczyt danych z parametrem
+$stmt = $polaczenie-&gt;prepare(
+    "SELECT * FROM uczniowie WHERE klasa = ?"
+);
+$stmt-&gt;bind_param("s", $klasa);
+$stmt-&gt;execute();
+$wynik = $stmt-&gt;get_result();
+
+// Dodanie rekordu
+$stmt = $polaczenie-&gt;prepare(
+    "INSERT INTO uczniowie (imie, nazwisko) VALUES (?, ?)"
+);
+$stmt-&gt;bind_param("ss", $imie, $nazwisko);
+$stmt-&gt;execute();</code></pre>
+  <div class="code-title"><span>JavaScript — minimum składni</span><span>ściąga</span></div>
+  <pre><code>// Zmienne
+let licznik = 0;
+const nazwa = "PAI";
+
+// Warunek
+if (licznik === 0) { console.log("Start"); }
+
+// Pętla po wartościach tablicy
+for (const element of [1, 2, 3]) { console.log(element); }
+
+// Funkcja
+const dodaj = (a, b = 0) =&gt; a + b;
+
+// Obiekt
+const uczen = { imie: "Anna", przedstawSie() { return this.imie; } };
+
+// JSON
+const tekstJSON = JSON.stringify(uczen);
+const dane = JSON.parse(tekstJSON);</code></pre>
+  <h3>3. Częste pomyłki</h3>
+  <div class="table-wrap"><table><thead><tr><th>Nie pomyl</th><th>Poprawne rozumienie</th></tr></thead><tbody>
+    <tr><td><code>=</code> i <code>==</code></td><td><code>=</code> przypisuje wartość, <code>==</code> porównuje wartości luźno.</td></tr>
+    <tr><td><code>==</code> i <code>===</code></td><td><code>===</code> sprawdza również typ; w JS jest zalecane.</td></tr>
+    <tr><td>GET i POST</td><td>GET przekazuje parametry w URL; POST w treści żądania. POST nie jest szyfrowaniem.</td></tr>
+    <tr><td>Walidacja i <code>htmlspecialchars()</code></td><td>Walidacja sprawdza poprawność danych; kodowanie HTML chroni sposób ich wyświetlania.</td></tr>
+    <tr><td><code>break</code> i <code>continue</code></td><td><code>break</code> kończy pętlę, <code>continue</code> pomija bieżącą iterację.</td></tr>
+    <tr><td><code>sort()</code> i <code>asort()</code></td><td><code>sort()</code> przeindeksowuje tablicę; <code>asort()</code> zachowuje klucze.</td></tr>
+    <tr><td><code>include</code> i <code>require</code></td><td>Brak pliku przy <code>include</code> daje ostrzeżenie; przy <code>require</code> zatrzymuje skrypt.</td></tr>
+    <tr><td><code>$_GET</code> i <code>$_POST</code></td><td>To różne tablice superglobalne odpowiadające różnym metodom żądania.</td></tr>
+    <tr><td><code>$_SESSION</code> i <code>$_COOKIE</code></td><td>Dane sesji są na serwerze; cookie znajduje się po stronie przeglądarki.</td></tr>
+    <tr><td><code>for...of</code> i <code>for...in</code></td><td><code>for...of</code> iteruje po wartościach; <code>for...in</code> po nazwach właściwości.</td></tr>
+    <tr><td><code>const</code> i niezmienność obiektu</td><td><code>const</code> blokuje ponowne przypisanie zmiennej, ale nie zamraża automatycznie obiektu.</td></tr>
+    <tr><td>JSON i <code>serialize()</code></td><td>JSON jest formatem wymiany danych między językami; <code>serialize()</code> jest formatem PHP.</td></tr>
+  </tbody></table></div>
+  <h3>4. Słownik kluczowych pojęć</h3>
+  <dl class="glossary">
+    <div><dt>Apache</dt><dd>Serwer HTTP obsługujący żądania przeglądarki.</dd></div>
+    <div><dt>API</dt><dd>Interfejs, przez który programy wymieniają dane lub wywołują funkcje.</dd></div>
+    <div><dt>Array / tablica</dt><dd>Struktura przechowująca wiele wartości.</dd></div>
+    <div><dt>Callback</dt><dd>Funkcja przekazana jako argument innej funkcji.</dd></div>
+    <div><dt>CRUD</dt><dd>Create, Read, Update, Delete — tworzenie, odczyt, aktualizacja i usuwanie.</dd></div>
+    <div><dt>Cookie</dt><dd>Niewielka porcja danych zapisywana przez przeglądarkę.</dd></div>
+    <div><dt>DOM</dt><dd>Model obiektowy dokumentu HTML dostępny dla JavaScript.</dd></div>
+    <div><dt>GET / POST</dt><dd>Metody HTTP wykorzystywane m.in. do przekazywania danych.</dd></div>
+    <div><dt>JSON</dt><dd>Tekstowy format wymiany danych, oparty na obiektach i tablicach.</dd></div>
+    <div><dt>MySQL</dt><dd>Relacyjny system zarządzania bazą danych.</dd></div>
+    <div><dt>Prepared statement</dt><dd>Zapytanie SQL z oddzielnie przekazywanymi parametrami.</dd></div>
+    <div><dt>Query string</dt><dd>Parametry w URL, rozpoczynające się po znaku <code>?</code>.</dd></div>
+    <div><dt>Scope</dt><dd>Zakres, w którym zmienna jest dostępna.</dd></div>
+    <div><dt>Session</dt><dd>Mechanizm przechowywania danych użytkownika po stronie serwera pomiędzy żądaniami.</dd></div>
+    <div><dt>SQL Injection</dt><dd>Atak wykorzystujący niebezpieczne włączanie danych wejściowych do zapytań SQL.</dd></div>
+    <div><dt>XSS</dt><dd>Atak polegający na wprowadzeniu niepożądanego skryptu do treści strony.</dd></div>
+    <div><dt>Walidacja</dt><dd>Sprawdzanie, czy dane spełniają wymagania aplikacji.</dd></div>
+    <div><dt>Serializacja</dt><dd>Zamiana struktury danych na postać tekstową lub inną postać możliwą do zapisania albo przesłania.</dd></div>
+  </dl>
+  <h3>5. Uzupełnienia i korekty merytoryczne</h3>
+  <p>W kilku miejscach materiał lekcyjny używa skrótów myślowych, które są przydatne na początku nauki, ale wymagają doprecyzowania:</p>
+  <ul>
+    <li><strong>Limit GET:</strong> nie istnieje jeden uniwersalny limit „około 2000 znaków” dla wszystkich środowisk. Długość URL ograniczają konkretne przeglądarki, serwery i elementy infrastruktury.</li>
+    <li><strong>POST:</strong> dane nie pojawiają się w pasku adresu, ale POST nie zapewnia szyfrowania ani poufności. Do tego służy HTTPS.</li>
+    <li><strong>Typ danych GET/POST:</strong> proste wartości parametrów są zwykle tekstem, ale formularze mogą przekazywać również tablice (np. przez nazwy zakończone <code>[]</code>).</li>
+    <li><strong>Tekst UTF-8:</strong> <code>strlen()</code> mierzy bajty, a nie znaki; dla polskich znaków używaj funkcji <code>mb_*</code>.</li>
+    <li><strong>Sesje:</strong> domyślne zachowanie czasu życia sesji zależy od konfiguracji. Samo zamknięcie przeglądarki nie jest uniwersalną gwarancją natychmiastowego usunięcia danych sesji z serwera.</li>
+    <li><strong>Upload:</strong> lista dozwolonych rozszerzeń nie wystarcza. Należy weryfikować typ pliku i jego rozmiar oraz bezpiecznie przechowywać pliki.</li>
+    <li><strong>Hasła:</strong> przykład logowania z hasłem zapisanym w kodzie jest wyłącznie demonstracją. W praktyce hasła przechowuje się jako bezpieczne skróty.</li>
+    <li><strong>Usuwanie danych:</strong> operacje zmieniające stan aplikacji (np. usuwanie rekordu) powinny być chronione i nie powinny być uruchamiane przez zwykły link GET.</li>
+  </ul>
+  <div class="remember"><strong>Najważniejsza zasada całego kursu</strong>Nie wystarczy, że kod działa dla jednego przykładu. Aplikacja powinna poprawnie obsługiwać brakujące i błędne dane, rozdzielać logikę od prezentacji, korzystać z bezpiecznych mechanizmów dostępu do bazy oraz świadomie kontrolować to, co wyświetla użytkownikowi.</div>
+</section>
+
+<footer class="footer">Programowanie Aplikacji Internetowych · notatki opracowane na podstawie materiałów z bloków 1–16</footer>
+</main>
+</div>
+</div>
+</body>
+</html>
